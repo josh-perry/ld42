@@ -1,0 +1,7 @@
+*.lua
+*.love
+
+!src/libs/*/*.lua
+
+img/*.png
+img/*.json

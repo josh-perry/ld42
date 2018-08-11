@@ -27,7 +27,7 @@ class CardResolution
 
     @player\draw!
 
-    love.graphics.setColor(0.1, 0.1, 0.1, 0.9)
+    love.graphics.setColor(0.01, 0.01, 0.01, 0.9)
     love.graphics.rectangle("fill", 80, 0, lovebite.width-160, lovebite.height)
 
     @player\drawResources(lovebite.width - 100, 0)

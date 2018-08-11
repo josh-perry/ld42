@@ -32,6 +32,7 @@ class CombatCardResolution
         name: "Roll your attack dice!",
         action: () ->
           @diceRoller = require("diceRoller")(@player\rollAttackDice!)
+          @menuItems = {}
       })
     else
       table.insert(@menuItems, {
@@ -78,12 +79,16 @@ class CombatCardResolution
     if @diceRoller
       @diceRoller\update(dt)
 
+      if @diceRoller.done
+        log.info("hit the enemy for "..@diceRoller.successes.." damage!!!")
+        @diceRoller = nil
+
     controls\update!
 
     if controls\pressed("confirm")
       menuItem = @menuItems[@menuItemIndex]
 
-      if menuItem.action
+      if menuItem and menuItem.action
         menuItem.action!
 
     if controls\pressed("up")

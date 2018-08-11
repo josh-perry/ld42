@@ -11,6 +11,9 @@ class Dice
     @x = love.math.random(50, lovebite.width-50)
     @y = lovebite.height + 16
 
+    @rotation = 0
+    @rotationSpeed = love.math.random(-10, 10)
+
     @velX = love.math.random(-20, 20)
     @velY = love.math.random(-200, -300)
 
@@ -24,14 +27,15 @@ class Dice
     if @settled
       result = @result
 
-      if result >= 5
+      if result >= 4
         love.graphics.setColor(0, 1, 0)
       else
         love.graphics.setColor(1, 0, 0)
     else
       result = love.math.random(1, 6)
 
-    love.graphics.draw(@sprite, @quads[result], @x, @y)
+    w, h = 16, 16
+    love.graphics.draw(@sprite, @quads[result], @x, @y, @rotation, 1, 1, w/2, h/2)
 
   update: (dt) =>
     @settleTimer\update(dt)
@@ -39,6 +43,7 @@ class Dice
     if not @settled
       @x += @velX * dt
       @y += @velY * dt
+      @rotation += @rotationSpeed * dt
 
       if @y < 16 and @velY < 0
         @velY -= (@velY * 1.5)
@@ -68,8 +73,32 @@ class DiceRoller
     for _, d in ipairs(@dice)
       d\draw!
 
+  reportDone: =>
+    @successes = 0
+
+    for _, d in ipairs(@dice)
+      if d.result >= 4
+        @successes += 1
+
+    @done = true
+    log.info(string.format("Rolling done: %i successes", @successes))
+
   update: (dt) =>
+    if @allSettled
+      if @postSettledTimer
+        @postSettledTimer\update(dt)
+
+      return
+
+    @allSettled = true
+
     for _, d in ipairs(@dice)
       d\update(dt)
+
+      if not d.settled
+        @allSettled = false
+
+    if @allSettled
+      @postSettledTimer = cron.after(2, () -> @reportDone!)
 
 return DiceRoller

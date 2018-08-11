@@ -3,7 +3,7 @@
 
 !src/libs/*/*.lua
 
-img/*.png
-img/*.json
+src/img/*.png
+src/img/*.json
 
 shipping/

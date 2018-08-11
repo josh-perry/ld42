@@ -38,6 +38,8 @@ class CombatCardResolution
 
     @makeMenus!
 
+    @enemyHealth = @card.actualCard.stats.health
+
   draw: =>
     lovebite\startDraw!
 
@@ -88,7 +90,7 @@ class CombatCardResolution
         log.info("Enemy taking "..diff.." damage")
 
         if diff > 0
-          @card.actualCard.stats.health -= diff
+          @enemyHealth -= diff
       else
         diff = @diceRollers["enemy"].successes - @diceRollers["player"].successes
 
@@ -119,7 +121,7 @@ class CombatCardResolution
 
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
 
-    if @card.actualCard.stats.health <= 0
+    if @enemyHealth <= 0
       @card.faceDown = false
       gsm\pop!
 
@@ -132,9 +134,9 @@ class CombatCardResolution
 
     love.graphics.printf(@card.actualCard.name, 0, lovebite.height/6 - 4, lovebite.width, "center")
 
-    xOffset = (lovebite.width / 2) - ((@card.actualCard.stats.health * 9) / 2)
+    xOffset = (lovebite.width / 2) - ((@enemyHealth * 9) / 2)
 
-    for i = 1, @card.actualCard.stats.health
+    for i = 1, @enemyHealth
       offset = (i*8) + (i-1)
       love.graphics.draw(@heartSprite, xOffset + offset, lovebite.height / 6 + 16, 0, 1, 1, 4, 4)
 

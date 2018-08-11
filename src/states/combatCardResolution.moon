@@ -82,6 +82,21 @@ class CombatCardResolution
         allRollersDone = false
 
     if allRollersDone and @diceRollers["player"] and @diceRollers["enemy"]
+      if @playerTurn
+        diff = @diceRollers["player"].successes - @diceRollers["enemy"].successes
+
+        log.info("Enemy taking "..diff.." damage")
+
+        if diff > 0
+          @card.actualCard.stats.health -= diff
+      else
+        diff = @diceRollers["enemy"].successes - @diceRollers["player"].successes
+
+        log.info("Player taking "..diff.." damage")
+
+        if diff > 0
+          @player.health -= diff
+
       @playerTurn = not @playerTurn
       @makeMenus!
 
@@ -103,6 +118,10 @@ class CombatCardResolution
       @menuItemIndex += 1
 
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
+
+    if @card.actualCard.stats.health <= 0
+      @card.faceDown = false
+      gsm\pop!
 
   drawBigCard: =>
     love.graphics.setColor(1, 1, 1)

@@ -12,7 +12,7 @@ class Player
 
     -- Stats
     @health = 5
-    @power = 6
+    @power = 10
     @agility = 6
     @maxHealth = 10
     @maxPower = 10

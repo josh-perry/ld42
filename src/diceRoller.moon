@@ -70,9 +70,10 @@ class Dice
           @velY -= (@velY * 1.5)
 
 class DiceRoller
-  new: (results, bottom) =>
+  new: (results, bottom, attacking) =>
     local diceSprite
 
+    @attacking = attacking
     @successes = 0
 
     for _, r in ipairs(results)
@@ -128,9 +129,11 @@ class DiceRoller
 
     if @allSettled and not @postSettledTimer
       y = (lovebite.height / 6)
+      y2 = (lovebite.height / 6) * 5 + 16
 
       if @bottom
         y = (lovebite.height / 6) * 5
+        y2 = lovebite.height / 6 + 16
 
       xOffset = (lovebite.width / 2) - ((@successes * 33) / 2)
 
@@ -138,8 +141,12 @@ class DiceRoller
       for _, d in ipairs(@dice)
         if d.result >= 4
           i += 1
-          flux.to(d, 2, {x: xOffset + (i*32) + (i-1) - 16, y: y - 16})\oncomplete(() -> d.rotation = 0)
+          flux.to(d, 1, {x: xOffset + (i*32) + (i-1) - 16, y: y - 16})\oncomplete(() ->
+            d.rotation = 0
 
-      @postSettledTimer = cron.after(3, () -> @reportDone!)
+            if @attacking
+              flux.to(d, 1, {x: lovebite.width/2, y: y2}))
+
+      @postSettledTimer = cron.after(1, () -> @reportDone!)
 
 return DiceRoller

@@ -154,16 +154,16 @@ class CombatCardResolution
       table.insert(@menuItems, {
         name: "Roll your attack dice!",
         action: () ->
-          @diceRollers["player"] = require("diceRoller")(@player\rollAttackDice!, true)
-          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.defenseDice), false)
+          @diceRollers["player"] = require("diceRoller")(@player\rollAttackDice!, true, true)
+          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.defenseDice), false, false)
           @menuItems = {}
       })
     else
       table.insert(@menuItems, {
         name: "Roll your defense dice!",
         action: () ->
-          @diceRollers["player"] = require("diceRoller")(@player\rollDefenseDice!, true)
-          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.attackDice), false)
+          @diceRollers["player"] = require("diceRoller")(@player\rollDefenseDice!, true, false)
+          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.attackDice), false, true)
           @menuItems = {}
       })
 

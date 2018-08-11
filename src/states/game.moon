@@ -14,10 +14,10 @@ class Game
 
     @cardBackSprite = love.graphics.newImage("img/card_back.png")
 
-    @map = require("map")!
-    @player = require("player")!
-
     @cards = @loadCards!
+
+    @map = require("map")(@cards)
+    @player = require("player")!
 
     @playerTurn = true
 

@@ -1,6 +1,11 @@
+lume = require("libs/lume")
+
 class Map
-  new: =>
+  new: (cardList) =>
     @cards = {}
+
+    -- The cards to make the board from
+    @cardList = cardList
 
     @mapX, @mapY = 5, 5
 
@@ -8,7 +13,7 @@ class Map
       @cards[x] = {}
 
       for y = 1, @mapY
-        @cards[x][y] = require("faceDownCard")!
+        @cards[x][y] = require("faceDownCard")(lume.randomchoice(cardList))
 
     @cards[1][1] = nil
     @cards[1][@mapY] = nil

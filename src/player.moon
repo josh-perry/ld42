@@ -52,16 +52,22 @@ class Player
 
     for i = 1, @health
       offset = (i*8) + (i-1)
-      love.graphics.draw(@heartSprite, lovebite.width - offset, y)
+      love.graphics.draw(@heartSprite, lovebite.width - offset, y + 2)
 
     lg.setColor(0.2, 0.2, 0.2)
-    lg.rectangle("fill", x, y + 8, @barSize, 8*2)
+    lg.rectangle("fill", x, y + 12, @barSize, 12*2)
 
     lg.setColor(1, 0.7, 0.7)
-    lg.rectangle("fill", x, y + 8, (@power/@maxPower)*@barSize, 8)
+    lg.rectangle("fill", x, y + 12, (@power/@maxPower)*@barSize, 12)
+
+    lg.setColor(1, 1, 1)
+    lg.printf(@power, x - 100, y + 12 - 4, 96, "right")
 
     lg.setColor(0.7, 0.7, 1)
-    lg.rectangle("fill", x, y + 16, (@agility/@maxAgility)*@barSize, 8)
+    lg.rectangle("fill", x, y + 24, (@agility/@maxAgility)*@barSize, 12)
+
+    lg.setColor(1, 1, 1)
+    lg.printf(@agility, x - 100, y + 24 - 4, 96, "right")
 
   calculateDice: =>
     @calculateAttackDice!

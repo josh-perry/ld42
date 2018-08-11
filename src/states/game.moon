@@ -23,6 +23,8 @@ class Game
     @map\draw!
     @player\drawResources(lovebite.width - 100, 0)
 
+    @player\draw!
+
     lovebite\endDraw!
 
   update: (dt) =>

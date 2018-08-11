@@ -1,10 +1,28 @@
 lg = love.graphics
 
+local log
+
 class Player
   new: =>
+    log = _G.log
+
+    -- Resources
     @power = 100
     @wisdom = 50
     @agility = 10
+
+    -- Position
+    @x = 4
+    @y = 4
+
+    log.info("Player initialized")
+
+  draw: =>
+    x = (@x * 24) + 12
+    y = (@y * 32) + 16
+
+    lg.setColor(0.4, 0.25, 0.5)
+    lg.circle("fill", x, y, 12)
 
   drawResources: (x, y) =>
     lg.setColor(0.2, 0.2, 0.2)

@@ -21,6 +21,8 @@ class Player
     @attackDice = 0
     @defenseDice = 0
 
+    @equipment = {}
+
     @barSize = 128
 
     -- Position
@@ -95,13 +97,13 @@ class Player
     @calculateDefenseDice!
 
   calculateAttackDice: =>
-    dice = math.floor(@power/2)
+    dice = lume.clamp(math.floor(@power/2), 1, 6)
     log.trace(string.format("Player has %i attack dice", dice))
 
     @attackDice = dice
 
   calculateDefenseDice: =>
-    dice = math.floor(@agility/2)
+    dice = lume.clamp(math.floor(@agility/2), 1, 6)
     log.trace(string.format("Player has %i defense dice", dice))
 
     @defenseDice = dice

@@ -17,6 +17,8 @@ class Game
     @map = require("map")!
     @player = require("player")!
 
+    @cards = @loadCards!
+
     @playerTurn = true
 
   draw: =>
@@ -52,5 +54,21 @@ class Game
 
         @player.x = oldX
         @player.y = oldY
+
+  loadCards: =>
+    cards = {}
+    cardFiles = love.filesystem.getDirectoryItems("cards")
+
+    for k, file in ipairs(cardFiles)
+      if string.sub(file, -3) ~= "lua"
+        log.trace("Rejecting card file"..file)
+        continue
+
+      f = string.format("cards/%s", file)\sub(1, -5)
+      log.info(string.format("Loading card %s", f))
+
+      table.insert(cards, require("card")(f))
+
+    return cards
 
 return Game

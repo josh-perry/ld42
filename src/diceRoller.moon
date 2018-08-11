@@ -2,6 +2,7 @@ lovebite = _G.lovebite
 
 cron = require("libs/cron")
 lume = require("libs/lume")
+flux = require("libs/flux")
 
 class Dice
   new: (result, sprite, quads, bottom) =>
@@ -72,7 +73,15 @@ class DiceRoller
   new: (results, bottom) =>
     local diceSprite
 
-    if bottom
+    @successes = 0
+
+    for _, r in ipairs(results)
+      if r >= 4
+        @successes += 1
+
+    @bottom = bottom
+
+    if @bottom
       diceSprite = love.graphics.newImage("img/dice.png")
     else
       diceSprite = love.graphics.newImage("img/evil dice.png")
@@ -92,23 +101,19 @@ class DiceRoller
     @dice = {}
 
     for _, r in ipairs(results)
-      table.insert(@dice, Dice(r, diceSprite, diceQuads, bottom))
+      table.insert(@dice, Dice(r, diceSprite, diceQuads, @bottom))
 
   draw: =>
     for _, d in ipairs(@dice)
       d\draw!
 
   reportDone: =>
-    @successes = 0
-
-    for _, d in ipairs(@dice)
-      if d.result >= 4
-        @successes += 1
-
     @done = true
     log.info(string.format("Rolling done: %i successes", @successes))
 
   update: (dt) =>
+    flux.update(dt)
+
     if @allSettled
       if @postSettledTimer
         @postSettledTimer\update(dt)
@@ -122,6 +127,19 @@ class DiceRoller
         @allSettled = false
 
     if @allSettled and not @postSettledTimer
-      @postSettledTimer = cron.after(0.5, () -> @reportDone!)
+      y = (lovebite.height / 6)
+
+      if @bottom
+        y = (lovebite.height / 6) * 5
+
+      xOffset = (lovebite.width / 2) - ((@successes * 33) / 2)
+
+      i = 0
+      for _, d in ipairs(@dice)
+        if d.result >= 4
+          i += 1
+          flux.to(d, 2, {x: xOffset + (i*32) + (i-1) - 16, y: y - 16})\oncomplete(() -> d.rotation = 0)
+
+      @postSettledTimer = cron.after(3, () -> @reportDone!)
 
 return DiceRoller

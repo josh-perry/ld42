@@ -1,6 +1,7 @@
 lovebite = _G.lovebite
 
 cron = require("libs/cron")
+lume = require("libs/lume")
 
 class Dice
   new: (result, sprite, quads, bottom) =>
@@ -13,6 +14,9 @@ class Dice
 
     @rotation = 0
     @rotationSpeed = love.math.random(-10, 10)
+
+    @scale = 1.5
+    @velScale = 0
 
     @velX = love.math.random(-20, 20)
 
@@ -33,18 +37,18 @@ class Dice
     if @settled
       result = @result
 
-      if result >= 4
-        love.graphics.setColor(0, 1, 0)
-      else
-        love.graphics.setColor(1, 0, 0)
+      if result < 4
+        @velScale = -4
     else
       result = love.math.random(1, 6)
 
     w, h = 16, 16
-    love.graphics.draw(@sprite, @quads[result], @x, @y, @rotation, 1, 1, w/2, h/2)
+    love.graphics.draw(@sprite, @quads[result], @x, @y, @rotation, @scale, @scale, w/2, h/2)
 
   update: (dt) =>
     @settleTimer\update(dt)
+
+    @scale = math.max(@scale + @velScale * dt, 0)
 
     if not @settled
       @x += @velX * dt
@@ -109,8 +113,6 @@ class DiceRoller
       if @postSettledTimer
         @postSettledTimer\update(dt)
 
-      return
-
     @allSettled = true
 
     for _, d in ipairs(@dice)
@@ -119,7 +121,7 @@ class DiceRoller
       if not d.settled
         @allSettled = false
 
-    if @allSettled
+    if @allSettled and not @postSettledTimer
       @postSettledTimer = cron.after(0.5, () -> @reportDone!)
 
 return DiceRoller

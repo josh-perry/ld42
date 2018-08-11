@@ -15,6 +15,7 @@ class CombatCardResolution
     log = _G.log
 
     @background = love.graphics.newImage("img/background.png")
+    @heartSprite = love.graphics.newImage("img/heart.png")
 
   enter: (previous, ...) =>
     @card, @map, @player = ...
@@ -107,5 +108,11 @@ class CombatCardResolution
     love.graphics.draw(@card.actualCard.sprite, x, y, 0, s, s, w/2, h/2)
 
     love.graphics.printf(@card.actualCard.name, 0, lovebite.height/6 - 4, lovebite.width, "center")
+
+    xOffset = (lovebite.width / 2) - ((@card.actualCard.stats.health * 9) / 2)
+
+    for i = 1, @card.actualCard.stats.health
+      offset = (i*8) + (i-1)
+      love.graphics.draw(@heartSprite, xOffset + offset, lovebite.height / 6 + 16, 0, 1, 1, 4, 4)
 
 return CombatCardResolution

@@ -2,6 +2,7 @@
 *.love
 
 !src/libs/*/*.lua
+!src/libs/*.lua
 
 src/img/*.png
 src/img/*.json

@@ -26,7 +26,7 @@ class CombatCardResolution
     @menuItems = {}
     @menuItemIndex = 1
 
-    @diceRoller
+    @diceRollers = {}
 
     @makeMenus!
 
@@ -49,8 +49,8 @@ class CombatCardResolution
 
     @drawBigCard!
 
-    if @diceRoller
-      @diceRoller\draw!
+    for i, v in pairs(@diceRollers)
+      v\draw!
 
     for c, i in ipairs(@menuItems)
       if c == @menuItemIndex
@@ -66,14 +66,19 @@ class CombatCardResolution
     lovebite\endDraw!
 
   update: (dt) =>
-    if @diceRoller
-      @diceRoller\update(dt)
+    allRollersDone = true
+    for i, v in pairs(@diceRollers)
+      v\update(dt)
 
-      if @diceRoller.done
-        log.info("hit the enemy for "..@diceRoller.successes.." damage!!!")
-        @playerTurn = not @playerTurn
-        @makeMenus!
-        @diceRoller = nil
+      if not v.done
+        allRollersDone = false
+
+    if allRollersDone and @diceRollers["player"] and @diceRollers["enemy"]
+      @playerTurn = not @playerTurn
+      @makeMenus!
+
+      @diceRollers["player"] = nil
+      @diceRollers["enemy"] = nil
 
     controls\update!
 
@@ -111,14 +116,16 @@ class CombatCardResolution
       table.insert(@menuItems, {
         name: "Roll your attack dice!",
         action: () ->
-          @diceRoller = require("diceRoller")(@player\rollAttackDice!)
+          @diceRollers["player"] = require("diceRoller")(@player\rollAttackDice!, true)
+          @diceRollers["enemy"] = require("diceRoller")(@player\rollAttackDice!, false)
           @menuItems = {}
       })
     else
       table.insert(@menuItems, {
         name: "Roll your defense dice!",
         action: () ->
-          @diceRoller = require("diceRoller")(@player\rollDefenseDice!)
+          @diceRollers["player"] = require("diceRoller")(@player\rollDefenseDice!, true)
+          @diceRollers["enemy"] = require("diceRoller")(@player\rollAttackDice!, false)
           @menuItems = {}
       })
 

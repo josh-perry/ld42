@@ -3,19 +3,25 @@ lovebite = _G.lovebite
 cron = require("libs/cron")
 
 class Dice
-  new: (result, sprite, quads) =>
+  new: (result, sprite, quads, bottom) =>
+    @bottom = bottom
     @result = result
     @sprite = sprite
     @quads = quads
 
     @x = love.math.random(50, lovebite.width-50)
-    @y = lovebite.height + 16
 
     @rotation = 0
     @rotationSpeed = love.math.random(-10, 10)
 
     @velX = love.math.random(-20, 20)
-    @velY = love.math.random(-200, -300)
+
+    if @bottom
+      @y = lovebite.height + 16
+      @velY = love.math.random(-300, -600)
+    else
+      @y = -16
+      @velY = love.math.random(300, 600)
 
     @settled = false
 
@@ -45,11 +51,21 @@ class Dice
       @y += @velY * dt
       @rotation += @rotationSpeed * dt
 
-      if @y < 16 and @velY < 0
-        @velY -= (@velY * 1.5)
+      if @bottom
+        if @y < (lovebite.height/2) + 16 and @velY < 0
+          @velY -= (@velY * 1.5)
+          @extraBarrier = true
+        elseif @extraBarrier and @y > lovebite.height - 16 and @velY > 0
+          @velY -= (@velY * 1.5)
+      else
+        if @y > (lovebite.height/2) - 16 and @velY > 0
+          @velY -= (@velY * 1.5)
+          @extraBarrier = true
+        elseif @extraBarrier and @y < 16 and @velY < 0
+          @velY -= (@velY * 1.5)
 
 class DiceRoller
-  new: (results) =>
+  new: (results, bottom) =>
     diceSprite = love.graphics.newImage("img/dice.png")
 
     w, h = diceSprite\getWidth!, diceSprite\getHeight!
@@ -67,7 +83,7 @@ class DiceRoller
     @dice = {}
 
     for _, r in ipairs(results)
-      table.insert(@dice, Dice(r, diceSprite, diceQuads))
+      table.insert(@dice, Dice(r, diceSprite, diceQuads, bottom))
 
   draw: =>
     for _, d in ipairs(@dice)

@@ -19,6 +19,7 @@ class Map
     @cards[1][@mapY] = nil
     @cards[@mapX][1] = nil
     @cards[@mapX][@mapY] = nil
+    @cards[3][3] = nil
 
   draw: =>
     for cardX = 1, @mapX

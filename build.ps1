@@ -1,3 +1,11 @@
+. "$PSScriptRoot\includes.ps1"
+
+cd src
+BuildLua
+BuildMaps
+BuildAseprite
+cd ..
+
 $source = "src"
 
 $shipping = "shipping"

@@ -12,8 +12,6 @@ class Game
     gsm = _G.gamestateManager
     controls = _G.controls
 
-    @cardBackSprite = love.graphics.newImage("img/card_back.png")
-
     @cards = @loadCards!
 
     @map = require("map")(@cards)

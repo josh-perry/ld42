@@ -25,7 +25,7 @@ class Dice
 
     @settled = false
 
-    @settleTimer = cron.after(love.math.random(0.5, 1.5), () -> @settled = true)
+    @settleTimer = cron.after(love.math.random(2, 4), () -> @settled = true)
 
   draw: =>
     local result
@@ -66,7 +66,12 @@ class Dice
 
 class DiceRoller
   new: (results, bottom) =>
-    diceSprite = love.graphics.newImage("img/dice.png")
+    local diceSprite
+
+    if bottom
+      diceSprite = love.graphics.newImage("img/dice.png")
+    else
+      diceSprite = love.graphics.newImage("img/evil dice.png")
 
     w, h = diceSprite\getWidth!, diceSprite\getHeight!
     diceQuads = {

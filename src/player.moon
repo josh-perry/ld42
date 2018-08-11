@@ -18,8 +18,8 @@ class Player
     log.info("Player initialized")
 
   draw: =>
-    x = (@x * 24) + 12
-    y = (@y * 32) + 16
+    x = ((@x * 24) + @x * 8) - 8 + 12
+    y = ((@y * 32) + @y * 8) - 8 + 16
 
     lg.setColor(0.4, 0.25, 0.5)
     lg.circle("fill", x, y, 12)

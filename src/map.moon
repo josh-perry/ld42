@@ -23,8 +23,8 @@ class Map
   draw: =>
     for cardX = 1, @mapX
       for cardY = 1, @mapY
-        x = (cardX * 24)
-        y = (cardY * 32)
+        x = ((cardX * 24) + cardX * 8) - 8
+        y = ((cardY * 32) + cardY * 8) - 8
 
         card = @cards[cardX][cardY]
 

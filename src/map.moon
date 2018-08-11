@@ -13,7 +13,7 @@ class Map
       @cards[x] = {}
 
       for y = 1, @mapY
-        @cards[x][y] = require("faceDownCard")(lume.randomchoice(cardList))
+        @cards[x][y] = require("boardCard")(lume.randomchoice(cardList))
 
     @cards[1][1] = nil
     @cards[1][@mapY] = nil

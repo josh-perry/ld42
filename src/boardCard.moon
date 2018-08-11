@@ -1,6 +1,6 @@
 log = _G.log
 
-class FaceDownCard
+class BoardCard
   new: (actualCard) =>
     @sprite = love.graphics.newImage("img/card_back.png")
     @actualCard = actualCard
@@ -10,4 +10,4 @@ class FaceDownCard
   draw: (x, y) =>
     love.graphics.draw(@sprite, x, y)
 
-return FaceDownCard
+return BoardCard

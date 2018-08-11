@@ -14,6 +14,8 @@ class EquipmentCardResolution
     lovebite = _G.lovebite
     log = _G.log
 
+    @background = love.graphics.newImage("img/background.png")
+
   enter: (previous, ...) =>
     @card, @map, @player = ...
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
@@ -49,6 +51,11 @@ class EquipmentCardResolution
 
   draw: =>
     lovebite\startDraw!
+
+    w, h = @background\getWidth!, @background\getHeight!
+    for x = 0, lovebite.width / w
+      for y = 0, lovebite.width / h
+        love.graphics.draw(@background, x*w, y*h)
 
     @map\draw!
 

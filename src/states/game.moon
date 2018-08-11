@@ -16,11 +16,17 @@ class Game
 
     @map = require("map")(@cards)
     @player = require("player")!
+    @background = love.graphics.newImage("img/background.png")
 
     @playerTurn = true
 
   draw: =>
     lovebite\startDraw!
+
+    w, h = @background\getWidth!, @background\getHeight!
+    for x = 0, lovebite.width / w
+      for y = 0, lovebite.width / h
+        love.graphics.draw(@background, x*w, y*h)
 
     @map\draw!
     @player\drawResources!

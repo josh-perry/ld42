@@ -6,7 +6,9 @@ class Card
 
     @name = cardFile.name or "Mystery Card"
 
-    @effect = cardFile.effect or () =>
-      log.error(string.format("No effect associated with card '%s'", cardFile))
+    @effects = cardFile.effects or {
+      () =>
+        log.error(string.format("No effect associated with card '%s'", cardFile))
+    }
 
 return Card

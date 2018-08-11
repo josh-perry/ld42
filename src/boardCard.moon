@@ -1,3 +1,4 @@
+lume = require("libs/lume")
 log = _G.log
 
 class BoardCard
@@ -23,6 +24,10 @@ class BoardCard
       return
 
     @faceDown = false
-    @actualCard\effect(player)
+
+    if #@actualCard.effects == 1
+      @actualCard.effects[1](player)
+    else
+      lume.randomchoice(@actualCard.effects)(player)
 
 return BoardCard

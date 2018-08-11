@@ -135,4 +135,22 @@ class Player
     log.trace(string.format("%i total attack dice", dice))
     @defenseDice = dice
 
+  rollAttackDice: =>
+    rolls = {}
+
+    for i = 1, @attackDice
+      rolls[i] = love.math.random(1, 6)
+      log.debug(string.format("Rolled a %i on attack", rolls[i]))
+
+    return rolls
+
+  rollDefenseDice: =>
+    rolls = {}
+
+    for i = 1, @defenseDice
+      rolls[i] = love.math.random(1, 6)
+      log.debug(string.format("Rolled a %i on defense", rolls[i]))
+
+    return rolls
+
 return Player

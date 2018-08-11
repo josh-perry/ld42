@@ -20,6 +20,25 @@ class CombatCardResolution
     @card, @map, @player = ...
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
 
+    @playerTurn = true
+
+    @menuItems = {}
+    @menuItemIndex = 1
+
+    @diceRoller
+
+    if @playerTurn
+      table.insert(@menuItems, {
+        name: "Roll your attack dice!",
+        action: () ->
+          @diceRoller = require("diceRoller")(@player\rollAttackDice!)
+      })
+    else
+      table.insert(@menuItems, {
+        name: "Roll your defense dice!",
+        action: () ->
+      })
+
   draw: =>
     lovebite\startDraw!
 
@@ -39,10 +58,41 @@ class CombatCardResolution
 
     @drawBigCard!
 
+    if @diceRoller
+      @diceRoller\draw!
+
+    for c, i in ipairs(@menuItems)
+      if c == @menuItemIndex
+        lg.setColor(1, 1, 1)
+      elseif i.action
+        lg.setColor(0.4, 0.4, 0.4)
+      else
+        lg.setColor(0.1, 0.1, 0.1)
+
+      y = ((lovebite.height/6)*4.5) + (c-1)*16
+      lg.printf(i.name, 0, y, lovebite.width, "center")
+
     lovebite\endDraw!
 
   update: (dt) =>
+    if @diceRoller
+      @diceRoller\update(dt)
+
     controls\update!
+
+    if controls\pressed("confirm")
+      menuItem = @menuItems[@menuItemIndex]
+
+      if menuItem.action
+        menuItem.action!
+
+    if controls\pressed("up")
+      @menuItemIndex -= 1
+
+    if controls\pressed("down")
+      @menuItemIndex += 1
+
+    @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
 
   drawBigCard: =>
     love.graphics.setColor(1, 1, 1)
@@ -52,6 +102,5 @@ class CombatCardResolution
     love.graphics.draw(@card.actualCard.sprite, x, y, 0, s, s, w/2, h/2)
 
     love.graphics.printf(@card.actualCard.name, 0, lovebite.height/6 - 4, lovebite.width, "center")
-
 
 return CombatCardResolution

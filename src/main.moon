@@ -31,6 +31,8 @@ setupScreen = ->
 
 love.load = ->
   log.info("Starting up...")
+
+  math.randomseed(os.time())
   love.graphics.setDefaultFilter("nearest", "nearest")
 
   setupScreen!

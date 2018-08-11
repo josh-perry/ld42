@@ -29,6 +29,18 @@ class Player
 
     @heartSprite = love.graphics.newImage("img/heart.png")
 
+    @diceSprite = love.graphics.newImage("img/dice.png")
+
+    w, h = @diceSprite\getWidth!, @diceSprite\getHeight!
+    @diceQuads = {
+        love.graphics.newQuad(0, 0, 16, 16, w, h),
+        love.graphics.newQuad(16, 0, 16, 16, w, h),
+        love.graphics.newQuad(32, 0, 16, 16, w, h),
+        love.graphics.newQuad(48, 0, 16, 16, w, h),
+        love.graphics.newQuad(64, 0, 16, 16, w, h),
+        love.graphics.newQuad(80, 0, 16, 16, w, h)
+    }
+
     @calculateDice!
 
     log.info("Player initialized")
@@ -37,6 +49,8 @@ class Player
     @health = lume.clamp(@health, 0, @maxHealth)
     @power = lume.clamp(@power, 0, @maxPower)
     @agility = lume.clamp(@agility, 0, @maxAgility)
+
+    @calculateDice!
 
   draw: =>
     x = ((@x * 24) + @x * 8) - 8 + 12
@@ -69,19 +83,26 @@ class Player
     lg.setColor(1, 1, 1)
     lg.printf(@agility, x - 100, y + 24 - 4, 96, "right")
 
+    lg.setColor(1, 1, 1)
+    lg.printf("Attack dice", lovebite.width - 24 - 100, 64 - 2, 96, "right")
+    lg.printf("Defense dice", lovebite.width - 24 - 100, 80 - 2, 96, "right")
+
+    lg.draw(@diceSprite, @diceQuads[@attackDice], lovebite.width - 24, 64)
+    lg.draw(@diceSprite, @diceQuads[@defenseDice], lovebite.width - 24, 80)
+
   calculateDice: =>
     @calculateAttackDice!
     @calculateDefenseDice!
 
   calculateAttackDice: =>
-    dice = math.min(@power/2)
-    log.info(string.format("Player has %i attack dice", dice))
+    dice = math.floor(@power/2)
+    log.trace(string.format("Player has %i attack dice", dice))
 
     @attackDice = dice
 
   calculateDefenseDice: =>
-    dice = math.min(@agility/2)
-    log.info(string.format("Player has %i defense dice", dice))
+    dice = math.floor(@agility/2)
+    log.trace(string.format("Player has %i defense dice", dice))
 
     @defenseDice = dice
 

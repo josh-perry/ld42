@@ -1,5 +1,7 @@
 lg = love.graphics
 
+lume = require("libs/lume")
+
 local log
 local lovebite
 
@@ -12,6 +14,7 @@ class Player
     @health = 5
     @power = 5
     @agility = 5
+    @maxHealth = 10
     @maxPower = 10
     @maxAgility = 10
 
@@ -24,6 +27,11 @@ class Player
     @heartSprite = love.graphics.newImage("img/heart.png")
 
     log.info("Player initialized")
+
+  update: (dt) =>
+    @health = lume.clamp(@health, 0, @maxHealth)
+    @power = lume.clamp(@power, 0, @maxPower)
+    @agility = lume.clamp(@agility, 0, @maxAgility)
 
   draw: =>
     x = ((@x * 24) + @x * 8) - 8 + 12

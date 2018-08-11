@@ -32,6 +32,8 @@ class Game
   update: (dt) =>
     controls\update(dt)
 
+    @player\update(dt)
+
     if controls\released("quit")
       gsm\switch("mainMenu")
 

@@ -58,6 +58,7 @@ class CardResolution
       @card.faceDown = false
       @card.actualCard.effects[@menuItemIndex].action(@player)
       gsm\pop!
+      @player\update(dt)
 
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@effects)
 

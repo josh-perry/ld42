@@ -69,7 +69,12 @@ class Game
           @player.y = oldY
         else
           card = @map.cards[@player.x][@player.y]
-          gsm\push("cardResolution", card, @map, @player)
+
+          if card.actualCard.type == "effect"
+            log.info("Stepped on an effect card")
+            gsm\push("cardResolution", card, @map, @player)
+          else
+            log.error(string.format("Unknown card type '%s'!", card.actualCard.type))
 
   loadCards: =>
     cards = {}

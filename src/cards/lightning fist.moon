@@ -1,5 +1,6 @@
 return {
   name: "Lightning Fist",
+  type: "effect"
   description: "You're embued with lightning!"
   sprite: "img/lightning fist.png"
   effects: {

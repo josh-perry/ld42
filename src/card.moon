@@ -5,11 +5,9 @@ class Card
     cardFile = require(cardFile)
 
     @name = cardFile.name or "Mystery Card"
-
+    @type = cardFile.type or "effect"
     @description = cardFile.description or ""
-
     @sprite = love.graphics.newImage(cardFile.sprite or "img/card_back.png")
-
     @effects = cardFile.effects or {
       () =>
         log.error(string.format("No effect associated with card '%s'", cardFile))

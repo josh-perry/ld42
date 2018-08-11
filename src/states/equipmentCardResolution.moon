@@ -29,11 +29,12 @@ class EquipmentCardResolution
           gsm\pop!
       })
 
-    for _, item in ipairs(@player.equipment)
+    for i, item in ipairs(@player.equipment)
       table.insert(@menuItems, {
         name: string.format("Replace %s", item.name),
         action: () ->
           @card.faceDown = false
+          @player.equipment[i] = @card.actualCard
           gsm\pop!
       })
 

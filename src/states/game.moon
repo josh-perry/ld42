@@ -66,7 +66,8 @@ class Game
           @player.x = oldX
           @player.y = oldY
         else
-          @map.cards[@player.x][@player.y]\resolve(@player)
+          card = @map.cards[@player.x][@player.y]
+          gsm\push("cardResolution", card, @map, @player)
 
   loadCards: =>
     cards = {}

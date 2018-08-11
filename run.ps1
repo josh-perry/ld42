@@ -4,7 +4,6 @@ clear
 
 cd src
 BuildLua
-BuildMaps
 BuildAseprite
 RunGame
 cd ..

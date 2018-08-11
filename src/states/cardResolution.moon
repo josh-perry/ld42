@@ -1,3 +1,4 @@
+local log
 local lovebite
 local gsm
 local controls
@@ -7,9 +8,12 @@ class CardResolution
     controls = _G.controls
     gsm = _G.gamestateManager
     lovebite = _G.lovebite
+    log = _G.log
 
   enter: (previous, ...) =>
     @card, @map, @player = ...
+    log.info(string.format("Resolving card '%s'", @card.actualCard.name))
+    log.debug(string.format("There are %i effects", #@card.actualCard.effects))
 
   draw: =>
     lovebite\startDraw!

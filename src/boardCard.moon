@@ -23,9 +23,9 @@ class BoardCard
 
     @faceDown = false
 
-    if #@actualCard.effects == 1
-      @actualCard.effects[1](player)
-    else
-      lume.randomchoice(@actualCard.effects)(player)
+    -- if #@actualCard.effects == 1
+    @actualCard.effects[1].action(player)
+    -- else
+    -- lume.randomchoice(@actualCard.effects).action(player)
 
 return BoardCard

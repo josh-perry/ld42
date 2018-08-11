@@ -3,11 +3,17 @@ return {
   description: "You're embued with lightning!"
   sprite: "img/lightning fist.png"
   effects: {
-    (player) ->
-      player.power -= 5
-      player.agility += 5,
-    (player) ->
-      player.power += 5
-      player.agility -= 5,
+    {
+      name: "Channel it into Agility",
+      action: (player) ->
+        player.power -= 5
+        player.agility += 5
+    },
+    {
+      name: "Channel it into Power",
+      action: (player) ->
+        player.power += 5
+        player.agility -= 5
+    }
   }
 }

@@ -12,11 +12,14 @@ class Player
 
     -- Stats
     @health = 5
-    @power = 5
-    @agility = 5
+    @power = 6
+    @agility = 6
     @maxHealth = 10
     @maxPower = 10
     @maxAgility = 10
+
+    @attackDice = 0
+    @defenseDice = 0
 
     @barSize = 128
 
@@ -25,6 +28,8 @@ class Player
     @y = 4
 
     @heartSprite = love.graphics.newImage("img/heart.png")
+
+    @calculateDice!
 
     log.info("Player initialized")
 
@@ -57,5 +62,21 @@ class Player
 
     lg.setColor(0.7, 0.7, 1)
     lg.rectangle("fill", x, y + 16, (@agility/@maxAgility)*@barSize, 8)
+
+  calculateDice: =>
+    @calculateAttackDice!
+    @calculateDefenseDice!
+
+  calculateAttackDice: =>
+    dice = math.min(@power/2)
+    log.info(string.format("Player has %i attack dice", dice))
+
+    @attackDice = dice
+
+  calculateDefenseDice: =>
+    dice = math.min(@agility/2)
+    log.info(string.format("Player has %i defense dice", dice))
+
+    @defenseDice = dice
 
 return Player

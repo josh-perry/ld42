@@ -7,6 +7,14 @@ local controls
 
 lg = love.graphics
 
+rollDice = (diceCount) ->
+  r = {}
+
+  for i = 1, diceCount
+    r[i] = love.math.random(1, 6)
+
+  return r
+
 class CombatCardResolution
   init: =>
     controls = _G.controls
@@ -117,7 +125,7 @@ class CombatCardResolution
         name: "Roll your attack dice!",
         action: () ->
           @diceRollers["player"] = require("diceRoller")(@player\rollAttackDice!, true)
-          @diceRollers["enemy"] = require("diceRoller")(@player\rollAttackDice!, false)
+          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.defenseDice), false)
           @menuItems = {}
       })
     else
@@ -125,7 +133,7 @@ class CombatCardResolution
         name: "Roll your defense dice!",
         action: () ->
           @diceRollers["player"] = require("diceRoller")(@player\rollDefenseDice!, true)
-          @diceRollers["enemy"] = require("diceRoller")(@player\rollAttackDice!, false)
+          @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.attackDice), false)
           @menuItems = {}
       })
 

@@ -25,7 +25,7 @@ class Dice
 
     @settled = false
 
-    @settleTimer = cron.after(love.math.random(2, 4), () -> @settled = true)
+    @settleTimer = cron.after(love.math.random(1, 3), () -> @settled = true)
 
   draw: =>
     local result

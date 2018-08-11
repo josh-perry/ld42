@@ -25,6 +25,7 @@ class CombatCardResolution
     @background = love.graphics.newImage("img/background.png")
     @heartSprite = love.graphics.newImage("img/heart.png")
 
+
   enter: (previous, ...) =>
     @card, @map, @player = ...
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
@@ -72,6 +73,14 @@ class CombatCardResolution
 
       y = ((lovebite.height/6)*4.5) + (c-1)*16
       lg.printf(i.name, 0, y, lovebite.width, "center")
+
+    lg.setColor(1, 1, 1)
+    if @playerTurn
+      lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
+      lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
+    else
+      lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
+      lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
 
     lovebite\endDraw!
 

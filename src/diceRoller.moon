@@ -120,6 +120,6 @@ class DiceRoller
         @allSettled = false
 
     if @allSettled
-      @postSettledTimer = cron.after(2, () -> @reportDone!)
+      @postSettledTimer = cron.after(0.5, () -> @reportDone!)
 
 return DiceRoller

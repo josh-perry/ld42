@@ -26,8 +26,8 @@ class Player
     @barSize = 128
 
     -- Position
-    @x = 4
-    @y = 4
+    @x = 3
+    @y = 3
 
     @heartSprite = love.graphics.newImage("img/heart.png")
 

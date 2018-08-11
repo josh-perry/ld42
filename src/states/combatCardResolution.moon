@@ -28,18 +28,7 @@ class CombatCardResolution
 
     @diceRoller
 
-    if @playerTurn
-      table.insert(@menuItems, {
-        name: "Roll your attack dice!",
-        action: () ->
-          @diceRoller = require("diceRoller")(@player\rollAttackDice!)
-          @menuItems = {}
-      })
-    else
-      table.insert(@menuItems, {
-        name: "Roll your defense dice!",
-        action: () ->
-      })
+    @makeMenus!
 
   draw: =>
     lovebite\startDraw!
@@ -82,6 +71,8 @@ class CombatCardResolution
 
       if @diceRoller.done
         log.info("hit the enemy for "..@diceRoller.successes.." damage!!!")
+        @playerTurn = not @playerTurn
+        @makeMenus!
         @diceRoller = nil
 
     controls\update!
@@ -114,5 +105,21 @@ class CombatCardResolution
     for i = 1, @card.actualCard.stats.health
       offset = (i*8) + (i-1)
       love.graphics.draw(@heartSprite, xOffset + offset, lovebite.height / 6 + 16, 0, 1, 1, 4, 4)
+
+  makeMenus: =>
+    if @playerTurn
+      table.insert(@menuItems, {
+        name: "Roll your attack dice!",
+        action: () ->
+          @diceRoller = require("diceRoller")(@player\rollAttackDice!)
+          @menuItems = {}
+      })
+    else
+      table.insert(@menuItems, {
+        name: "Roll your defense dice!",
+        action: () ->
+          @diceRoller = require("diceRoller")(@player\rollDefenseDice!)
+          @menuItems = {}
+      })
 
 return CombatCardResolution

@@ -1,5 +1,3 @@
-sti = require("libs.sti")
-
 local lovebite
 local log
 local gsm
@@ -14,7 +12,9 @@ class Game
     gsm = _G.gamestateManager
     controls = _G.controls
 
-    @map = sti("maps/entrance.lua")
+    @cardBackSprite = love.graphics.newImage("img/card_back.png")
+
+    @map = require("map")!
 
   draw: =>
     lovebite\startDraw!
@@ -25,7 +25,6 @@ class Game
 
   update: (dt) =>
     controls\update(dt)
-    @map\update(dt)
 
     if controls\pressed("quit")
       gsm\switch("mainMenu")

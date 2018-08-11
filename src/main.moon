@@ -11,14 +11,14 @@ lg = love.graphics
 
 setupScreen = ->
   internalWidth = 320
-  internalHeight = 180
+  internalHeight = 240
 
   log.info("Initializing lovebite")
 
   lovebite\setMode({
     width: internalWidth,
     height: internalHeight,
-    scale: 4,
+    scale: 3,
     flags: {
       vsync: true
     }

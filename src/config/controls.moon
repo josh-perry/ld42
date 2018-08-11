@@ -4,7 +4,7 @@ return {
     down: {"key:down", "axis:lefty+"},
     left: {"key:left", "axis:leftx-"},
     right: {"key:right", "axis:leftx+"},
-    confirm: {"key:z", "button:a"},
+    confirm: {"key:z", "key:space", "button:a"},
     quit: {"key:escape", "button:back"}
   },
   pairs: {

@@ -50,13 +50,13 @@ class Game
       if controls\pressed("left")
         @player.x -= 1
         moved = true
-      if controls\pressed("right")
+      elseif controls\pressed("right")
         @player.x += 1
         moved = true
-      if controls\pressed("up")
+      elseif controls\pressed("up")
         @player.y -= 1
         moved = true
-      if controls\pressed("down")
+      elseif controls\pressed("down")
         @player.y += 1
         moved = true
 

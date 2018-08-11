@@ -17,15 +17,4 @@ class BoardCard
     else
       love.graphics.draw(@actualCard.sprite, x, y)
 
-  resolve: (player) =>
-    if not @faceDown
-      return
-
-    @faceDown = false
-
-    -- if #@actualCard.effects == 1
-    @actualCard.effects[1].action(player)
-    -- else
-    -- lume.randomchoice(@actualCard.effects).action(player)
-
 return BoardCard

@@ -1,3 +1,5 @@
+lume = require("libs/lume")
+
 local log
 local lovebite
 local gsm
@@ -15,6 +17,9 @@ class CardResolution
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
     log.debug(string.format("There are %i effects", #@card.actualCard.effects))
 
+    @effects = @card.actualCard.effects
+    @menuItemIndex = 1
+
   draw: =>
     lovebite\startDraw!
 
@@ -25,14 +30,32 @@ class CardResolution
 
     @drawBigCard!
 
+    for c, i in ipairs(@effects)
+      if c == @menuItemIndex
+        love.graphics.setColor(1, 1, 1)
+      else
+        love.graphics.setColor(0.4, 0.4, 0.4)
+
+      y = (lovebite.height/2) + (c-1)*16
+      love.graphics.printf(i.name, 0, y, lovebite.width - 20, "right")
+
     lovebite\endDraw!
 
   update: (dt) =>
     controls\update(dt)
 
+    if controls\pressed("up")
+      @menuItemIndex -= 1
+
+    if controls\pressed("down")
+      @menuItemIndex += 1
+
     if controls\pressed("confirm")
-      @card\resolve(@player)
+      @card.faceDown = false
+      @card.actualCard.effects[@menuItemIndex].action(@player)
       gsm\pop!
+
+    @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@effects)
 
   drawBigCard: =>
     love.graphics.setColor(1, 1, 1)

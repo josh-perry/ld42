@@ -7,7 +7,7 @@ return {
     health: 3
     power: 2
     agility: 2,
-    attackDice: 2,
-    defenseDice: 2
+    attackDice: 1,
+    defenseDice: 1
   }
 }

@@ -24,6 +24,7 @@ class CardResolution
     lovebite\startDraw!
 
     @map\draw!
+
     @player\drawResources(lovebite.width - 100, 0)
 
     @player\draw!
@@ -36,8 +37,8 @@ class CardResolution
       else
         love.graphics.setColor(0.4, 0.4, 0.4)
 
-      y = (lovebite.height/2) + (c-1)*16
-      love.graphics.printf(i.name, 0, y, lovebite.width - 20, "right")
+      y = ((lovebite.height/6)*4.5) + (c-1)*16
+      love.graphics.printf(i.name, 0, y, lovebite.width, "center")
 
     lovebite\endDraw!
 
@@ -61,7 +62,7 @@ class CardResolution
     love.graphics.setColor(1, 1, 1)
     x, y = lovebite.width/2, lovebite.height/2
     w, h = @card.actualCard.sprite\getWidth!, @card.actualCard.sprite\getHeight!
-    s = 4, 4
+    s = 3, 3
     love.graphics.draw(@card.actualCard.sprite, x, y, 0, s, s, w/2, h/2)
 
     love.graphics.printf(@card.actualCard.name, 0, lovebite.height/6 - 4, lovebite.width, "center")

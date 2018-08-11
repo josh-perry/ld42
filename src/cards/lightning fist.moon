@@ -6,14 +6,14 @@ return {
     {
       name: "Channel it into Agility",
       action: (player) ->
-        player.power -= 5
-        player.agility += 5
+        player.power -= 1
+        player.agility += 1
     },
     {
       name: "Channel it into Power",
       action: (player) ->
-        player.power += 5
-        player.agility -= 5
+        player.power += 1
+        player.agility -= 1
     }
   }
 }

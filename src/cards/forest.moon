@@ -6,9 +6,7 @@ return {
     {
       name: "Rest",
       action: (player) ->
-        player.wisdom += 5
-        player.power += 5
-        player.agility += 5
+        player.health += 2
     }
   }
 }

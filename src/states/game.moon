@@ -23,7 +23,7 @@ class Game
     lovebite\startDraw!
 
     @map\draw!
-    @player\drawResources(lovebite.width - 100, 0)
+    @player\drawResources!
 
     @player\draw!
 

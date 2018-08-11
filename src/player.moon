@@ -94,11 +94,8 @@ class Player
     lg.printf(@agility, x - 100, y + 24 - 4, 96, "right")
 
     lg.setColor(1, 1, 1)
-    lg.printf("Attack dice", lovebite.width - 24 - 100, 64 - 2, 96, "right")
-    lg.printf("Defense dice", lovebite.width - 24 - 100, 80 - 2, 96, "right")
-
-    lg.draw(@diceSprite, @diceQuads[@attackDice], lovebite.width - 24, 64)
-    lg.draw(@diceSprite, @diceQuads[@defenseDice], lovebite.width - 24, 80)
+    lg.printf("Attack dice: "..@attackDice, lovebite.width - 100, 64 - 2, 96, "right")
+    lg.printf("Defense dice: "..@defenseDice, lovebite.width - 100, 80 - 2, 96, "right")
 
   calculateDice: =>
     @calculateAttackDice!

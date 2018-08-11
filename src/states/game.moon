@@ -38,22 +38,37 @@ class Game
       gsm\switch("mainMenu")
 
     if @playerTurn
+      moved = false
       oldX, oldY = @player.x, @player.y
 
       if controls\pressed("left")
         @player.x -= 1
+        moved = true
       if controls\pressed("right")
         @player.x += 1
+        moved = true
       if controls\pressed("up")
         @player.y -= 1
+        moved = true
       if controls\pressed("down")
         @player.y += 1
+        moved = true
 
-      if not @map.cards[@player.x] or not @map.cards[@player.x][@player.y]
-        log.debug(string.format("No card at player position %i, %i, moving back", @player.x, @player.y))
+      if moved
+        boardCard = @map.cards[@player.x] and @map.cards[@player.x][@player.y]
 
-        @player.x = oldX
-        @player.y = oldY
+        if not boardCard
+          log.debug(string.format("No card at player position %i, %i, moving back", @player.x, @player.y))
+
+          @player.x = oldX
+          @player.y = oldY
+        elseif not boardCard.faceDown
+          log.debug(string.format("Trying to move onto a face up card at %i, %i, moving back", @player.x, @player.y))
+
+          @player.x = oldX
+          @player.y = oldY
+        else
+          @map.cards[@player.x][@player.y]\resolve(@player)
 
   loadCards: =>
     cards = {}

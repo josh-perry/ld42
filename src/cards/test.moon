@@ -1,5 +1,6 @@
 return {
   name: "Test",
-  effect: =>
-    print("test"),
+  effect: (player) =>
+    player.power -= 5
+    player.agility += 5
 }

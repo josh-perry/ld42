@@ -9,7 +9,8 @@ class GamestateManager
 	    mainMenu: require("states.mainMenu")!
       game: require("states.game")!,
       cardResolution: require("states.cardResolution")!,
-      equipmentCardResolution: require("states.equipmentCardResolution")!
+      equipmentCardResolution: require("states.equipmentCardResolution")!,
+      combatCardResolution: require("states.combatCardResolution")!
 	  }
 
     log.info("Registering gamestate callbacks")

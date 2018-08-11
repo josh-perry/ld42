@@ -82,6 +82,9 @@ class Game
           elseif card.actualCard.type == "equipment"
             log.info("Stepped on an equipment card")
             gsm\push("equipmentCardResolution", card, @map, @player)
+          elseif card.actualCard.type == "combat"
+            log.info("Stepped on an combat card")
+            gsm\push("combatCardResolution", card, @map, @player)
           else
             log.error(string.format("Unknown card type '%s'!", card.actualCard.type))
 

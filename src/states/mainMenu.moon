@@ -71,6 +71,9 @@ class MainMenu
       @menuItemIndex += 1
       log.trace("Menu item + 1")
 
+    if controls\released("quit")
+      love.event.quit!
+
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
 
 return MainMenu

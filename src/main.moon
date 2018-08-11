@@ -3,7 +3,7 @@ print("")
 
 -- Libs
 log = require("libs.log")
-log.level = "debug"
+log.level = "trace"
 
 lovebite = require("libs.lovebite")
 baton = require("libs.baton")

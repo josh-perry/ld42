@@ -61,6 +61,14 @@ class Player
     lg.setColor(0.4, 0.25, 0.5)
     lg.circle("fill", x, y, 12)
 
+    @drawEquipment!
+
+  drawEquipment: =>
+    lg.setColor(1, 1, 1)
+
+    for i, v in ipairs(@equipment)
+      love.graphics.draw(v.sprite, lovebite.width - 32 - ((i-1) * 12) + i, 128)
+
   drawResources: =>
     x, y = lovebite.width - 128, 0
 
@@ -98,14 +106,33 @@ class Player
 
   calculateAttackDice: =>
     dice = lume.clamp(math.floor(@power/2), 1, 6)
-    log.trace(string.format("Player has %i attack dice", dice))
 
+    log.trace(string.format("%i attack dice from base stats", dice))
+
+    for _, v in ipairs(@equipment)
+      if not v.diceBoosts
+        continue
+
+      log.trace(string.format("+%i attack dice from equipped %s", v.diceBoosts.attack, v.name))
+
+      dice += v.diceBoosts.attack or 0
+
+    log.trace(string.format("%i total attack dice", dice))
     @attackDice = dice
 
   calculateDefenseDice: =>
     dice = lume.clamp(math.floor(@agility/2), 1, 6)
-    log.trace(string.format("Player has %i defense dice", dice))
 
+    log.trace(string.format("%i defense dice from base stats", dice))
+
+    for _, v in ipairs(@equipment)
+      if not v.diceBoosts
+        continue
+
+      dice += v.diceBoosts.defense or 0
+      log.trace(string.format("+%i defense dice from equipped %s", v.diceBoosts.defense, v.name))
+
+    log.trace(string.format("%i total attack dice", dice))
     @defenseDice = dice
 
 return Player

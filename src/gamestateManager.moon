@@ -8,7 +8,8 @@ class GamestateManager
     @states = {
 	    mainMenu: require("states.mainMenu")!
       game: require("states.game")!,
-      cardResolution: require("states.cardResolution")!
+      cardResolution: require("states.cardResolution")!,
+      equipmentCardResolution: require("states.equipmentCardResolution")!
 	  }
 
     log.info("Registering gamestate callbacks")

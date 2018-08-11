@@ -7,6 +7,7 @@ class Card
     @name = cardFile.name or "Mystery Card"
     @type = cardFile.type or "effect"
     @description = cardFile.description or ""
+    @diceBoosts = cardFile.diceBoosts
     @sprite = love.graphics.newImage(cardFile.sprite or "img/card_back.png")
     @effects = cardFile.effects or {
       () =>

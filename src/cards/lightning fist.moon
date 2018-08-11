@@ -1,5 +1,7 @@
 return {
-  name: "Test",
+  name: "Lightning Fist",
+  description: "You're embued with lightning!"
+  sprite: "img/lightning fist.png"
   effects: {
     (player) ->
       player.power -= 5

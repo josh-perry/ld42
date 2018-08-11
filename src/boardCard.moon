@@ -15,9 +15,7 @@ class BoardCard
     if @faceDown
       love.graphics.draw(@cardBack, x, y)
     else
-      love.graphics.setColor(0.2, 0.2, 0.2, 0.6)
-      love.graphics.rectangle("fill", x, y, 24, 32)
-      love.graphics.draw(@cardBack, x, y)
+      love.graphics.draw(@actualCard.sprite, x, y)
 
   resolve: (player) =>
     if not @faceDown

@@ -13,6 +13,10 @@ class MainMenu
     gsm = _G.gamestateManager
     controls = _G.controls
 
+    @instructions = "You can't go back on cards you've already revealed. Eventually you'll have nowhere to go and fight a boss.
+
+Dice rolls of 4 and above are successes. Successful defense rolls offset successful attack rolls and damage dealt is the difference."
+
     fullscreen = false
 
     @font = lg.newFont("fonts/Pixel-UniCode.fnt")
@@ -71,6 +75,9 @@ class MainMenu
 
       y = (lovebite.height/2) + (c-1)*16
       lg.printf(i.display, 0, y, lovebite.width - 20, "right")
+
+    lg.setColor(1, 1, 1)
+    lg.printf(@instructions, 10, 10, lovebite.width / 2, "left")
 
     lovebite\endDraw!
 

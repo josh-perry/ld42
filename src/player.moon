@@ -12,11 +12,11 @@ class Player
 
     -- Stats
     @health = 5
-    @power = 4
-    @agility = 4
+    @power = 6
+    @agility = 6
     @maxHealth = 10
-    @maxPower = 10
-    @maxAgility = 10
+    @maxPower = 20
+    @maxAgility = 20
 
     @attackDice = 0
     @defenseDice = 0

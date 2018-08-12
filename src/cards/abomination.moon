@@ -9,6 +9,6 @@ return {
     power: 2
     agility: 2,
     attackDice: 4,
-    defenseDice: 2
+    defenseDice: 1
   }
 }

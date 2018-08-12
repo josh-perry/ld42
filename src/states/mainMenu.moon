@@ -5,12 +5,15 @@ lg = love.graphics
 
 local lovebite
 local controls
+local fullscreen
 
 class MainMenu
   init: =>
     lovebite = _G.lovebite
     gsm = _G.gamestateManager
     controls = _G.controls
+
+    fullscreen = false
 
     @font = lg.newFont("fonts/Pixel-UniCode.fnt")
 
@@ -23,7 +26,30 @@ class MainMenu
         display: "Continue"
       },
       {
-        display: "Options"
+        display: "Toggle Fullscreen",
+        action: () ->
+          fullscreen = not fullscreen
+
+          if fullscreen
+            lovebite\setMode({
+              width: 320,
+              height: 240,
+              scale: 0,
+              flags: {
+                fullscreen: true,
+                fullscreentype: "desktop",
+                vsync: false
+              }
+            })
+          else
+            lovebite\setMode({
+              width: 320,
+              height: 240,
+              scale: 3,
+              flags: {
+                vsync: false
+              }
+            })
       },
       {
         display: "Quit",

@@ -15,5 +15,6 @@ class Card
       () =>
         log.error(string.format("No effect associated with card '%s'", cardFile))
     }
+    @unique = cardFile.unique
 
 return Card

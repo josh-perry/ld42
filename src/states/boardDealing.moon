@@ -85,7 +85,11 @@ class BoardDealing
     lovebite\endDraw!
 
   update: (dt) =>
+    controls\update(dt)
     @group\update(dt)
+
+    if controls\pressed("confirm")
+      gsm\switch("game")
 
     if @doneCards >= @totalCards
       @postDoneTimer\update(dt)

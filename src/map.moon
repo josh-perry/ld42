@@ -1,8 +1,10 @@
 lume = require("libs/lume")
 
 class Map
-  new: (cardList) =>
+  new: (cardList, level) =>
     @cards = {}
+
+    @level = level or 1
 
     -- The cards to make the board from
     @cardList = cardList
@@ -13,13 +15,23 @@ class Map
       @cards[x] = {}
 
       for y = 1, @mapY
-        @cards[x][y] = require("boardCard")(lume.randomchoice(cardList))
+        c = lume.randomchoice(cardList)
+
+        while c.unique
+          c = lume.randomchoice(cardList)
+
+        @cards[x][y] = require("boardCard")(c)
 
     @cards[1][1] = nil
     @cards[1][@mapY] = nil
     @cards[@mapX][1] = nil
     @cards[@mapX][@mapY] = nil
     @cards[3][3] = nil
+
+    @bossCard = nil
+
+    if @level == 1
+      @bossCard = require("card")("cards/awakened avocado")
 
   draw: =>
     for cardX = 1, @mapX

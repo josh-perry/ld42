@@ -1,4 +1,5 @@
 lume = require("libs/lume")
+cron = require("libs/cron")
 
 local lovebite
 local log
@@ -17,11 +18,14 @@ class Game
     @cards = @loadCards!
 
   enter: =>
-    @map = require("map")(@cards)
+    @map = require("map")(@cards, 1)
     @player = require("player")!
     @background = love.graphics.newImage("img/background.png")
 
     @playerTurn = true
+    @bossTimer = cron.after(2, () ->
+      @map.cards[@player.x][@player.y] = require("boardCard")(@map.bossCard)
+      gsm\push("combatCardResolution", @map.cards[@player.x][@player.y], @map, @player))
 
   draw: =>
     lovebite\startDraw!
@@ -36,12 +40,33 @@ class Game
 
     @player\draw!
 
+    love.graphics.print(@getMoveCount!, 10, 10)
+
     lovebite\endDraw!
+
+  getMoveCount: =>
+    moves = 0
+
+    directions = {
+      {x: -1, y: 0},
+      {x: 1, y: 0},
+      {x: 0, y: -1},
+      {x: 0, y: 1}
+    }
+
+    for _, o in ipairs(directions)
+      boardCard = @map.cards[@player.x - o.x] and @map.cards[@player.x - o.x][@player.y + o.y]
+
+      if boardCard and not boardCard.triggered
+        moves += 1
 
     return moves
 
   update: (dt) =>
     controls\update(dt)
+
+    if @getMoveCount! <= 0
+      @bossTimer\update(dt)
 
     @player\update(dt)
 

@@ -102,3 +102,4 @@ love.load = ->
   _G.bossKillSound = love.audio.newSource("sounds/boss kill.wav", "static")
   _G.hitSound = love.audio.newSource("sounds/Hit_Hurt48.wav", "static")
   _G.moveSound = love.audio.newSource("sounds/Jump39.wav", "static")
+  _G.moveSound\setVolume(0.2)

@@ -27,6 +27,11 @@ class Game
 
   reloadMap: =>
     @level += 1
+
+    if @level == 3
+      gsm\switch("gameWin")
+      return
+
     @map = require("map")(@cards, @level)
     @player\resetPosition!
 

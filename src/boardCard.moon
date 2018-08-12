@@ -16,7 +16,7 @@ class BoardCard
     if @revealed and not @triggered
       love.graphics.draw(@actualCard.sprite, x, y)
     elseif @triggered
-      love.graphics.setColor(1, 1, 1, 0.1)
+      love.graphics.setColor(1, 1, 1, 0.05)
       love.graphics.draw(@actualCard.sprite, x, y)
     else
       love.graphics.draw(@cardBack, x, y)

@@ -2,7 +2,7 @@ return {
   name: "Red Blob",
   type: "combat",
   description: "It's looking hard at you.",
-  sprite: "img/green blob.png",
+  sprite: "img/red blob.png",
   floor: 2,
   stats: {
     health: 3

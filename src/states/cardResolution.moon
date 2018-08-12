@@ -56,12 +56,15 @@ class CardResolution
     controls\update(dt)
 
     if controls\pressed("up")
+      _G.uiSound\play!
       @menuItemIndex -= 1
 
     if controls\pressed("down")
+      _G.uiSound\play!
       @menuItemIndex += 1
 
     if controls\pressed("confirm")
+      _G.uiConfirmSound\play!
       @card.triggered = true
       @card.actualCard.effects[@menuItemIndex].action(@player, @map)
       gsm\pop!

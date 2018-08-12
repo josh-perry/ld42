@@ -95,3 +95,7 @@ love.load = ->
     love.audio.newSource("sounds/dice_10.wav", "static"),
     love.audio.newSource("sounds/dice_11.wav", "static")
   }
+
+  _G.uiSound = love.audio.newSource("sounds/Blip_Select35.wav", "static")
+  _G.uiConfirmSound = love.audio.newSource("sounds/Blip_Select43.wav", "static")
+  _G.uiDenySound = love.audio.newSource("sounds/Blip_Select44.wav", "static")

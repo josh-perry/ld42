@@ -25,7 +25,6 @@ class CombatCardResolution
     @background = love.graphics.newImage("img/background.png")
     @heartSprite = love.graphics.newImage("img/heart.png")
 
-
   enter: (previous, ...) =>
     @card, @map, @player = ...
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
@@ -120,12 +119,15 @@ class CombatCardResolution
       menuItem = @menuItems[@menuItemIndex]
 
       if menuItem and menuItem.action
+        _G.uiConfirmSound\play!
         menuItem.action!
 
     if controls\pressed("up")
+      _G.uiSound\play!
       @menuItemIndex -= 1
 
     if controls\pressed("down")
+      _G.uiSound\play!
       @menuItemIndex += 1
 
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)

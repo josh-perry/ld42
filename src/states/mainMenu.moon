@@ -60,15 +60,19 @@ class MainMenu
       if menuItem.action
         log.info(string.format("Selected '%s'", menuItem.display))
         menuItem.action!
+        _G.uiConfirmSound\play!
       else
+        _G.uiDenySound\play!
         log.info(string.format("Selected '%s': no bound action", menuItem.display))
 
     if controls\pressed("up")
       @menuItemIndex -= 1
+      _G.uiSound\play!
       log.trace("Menu item - 1")
 
     if controls\pressed("down")
       @menuItemIndex += 1
+      _G.uiSound\play!
       log.trace("Menu item + 1")
 
     if controls\released("quit")

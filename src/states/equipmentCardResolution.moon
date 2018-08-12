@@ -88,12 +88,15 @@ class EquipmentCardResolution
       menuItem = @menuItems[@menuItemIndex]
 
       if menuItem.action
+        _G.uiConfirmSound\play!
         menuItem.action!
 
     if controls\pressed("up")
+      _G.uiSound\play!
       @menuItemIndex -= 1
 
     if controls\pressed("down")
+      _G.uiSound\play!
       @menuItemIndex += 1
 
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)

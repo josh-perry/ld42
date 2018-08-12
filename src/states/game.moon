@@ -78,6 +78,14 @@ class Game
     return moves
 
   update: (dt) =>
+    if love.keyboard.isDown("q")
+      for cardX = 1, @map.mapX
+        for cardY = 1, @map.mapY
+          card = @map.cards[cardX][cardY]
+
+          if card
+            card.revealed = true
+
     flux.update(dt)
     controls\update(dt)
 

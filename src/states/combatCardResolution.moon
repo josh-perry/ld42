@@ -70,24 +70,25 @@ class CombatCardResolution
     for i, v in pairs(@diceRollers)
       v\draw!
 
-    for c, i in ipairs(@menuItems)
-      if c == @menuItemIndex
-        lg.setColor(1, 1, 1)
-      elseif i.action
-        lg.setColor(0.4, 0.4, 0.4)
+    if @enemyHealth > 0
+      for c, i in ipairs(@menuItems)
+        if c == @menuItemIndex
+          lg.setColor(1, 1, 1)
+        elseif i.action
+          lg.setColor(0.4, 0.4, 0.4)
+        else
+          lg.setColor(0.1, 0.1, 0.1)
+
+        y = ((lovebite.height/6)*4.5) + (c-1)*16
+        lg.printf(i.name, 0, y, lovebite.width, "center")
+
+      lg.setColor(1, 1, 1)
+      if @playerTurn
+        lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
+        lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
       else
-        lg.setColor(0.1, 0.1, 0.1)
-
-      y = ((lovebite.height/6)*4.5) + (c-1)*16
-      lg.printf(i.name, 0, y, lovebite.width, "center")
-
-    lg.setColor(1, 1, 1)
-    if @playerTurn
-      lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
-      lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
-    else
-      lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
-      lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
+        lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
+        lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
 
     lovebite\endDraw!
 

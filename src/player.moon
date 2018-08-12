@@ -27,6 +27,9 @@ class Player
 
     @barSize = 64
 
+    @attackPotions = 2
+    @defensePotions = 2
+
     @resetPosition!
 
     @sprite = love.graphics.newImage("img/player.png")
@@ -110,6 +113,10 @@ class Player
     lg.printf("Attack dice: "..@attackDice, lovebite.width - 100, 64 - 2, 96, "right")
     lg.printf("Defense dice: "..@defenseDice, lovebite.width - 100, 80 - 2, 96, "right")
 
+    lg.setColor(1, 1, 1)
+    lg.printf("Attack potions: "..@attackPotions, lovebite.width - 100, 96 - 2, 96, "right")
+    lg.printf("Defense potions: "..@defensePotions, lovebite.width - 100, 112 - 2, 96, "right")
+
   calculateDice: =>
     @calculateAttackDice!
     @calculateDefenseDice!
@@ -148,7 +155,12 @@ class Player
   rollAttackDice: =>
     rolls = {}
 
-    for i = 1, @attackDice
+    diceCount = @attackDice
+
+    if @attackBuffed
+      diceCount += 4
+
+    for i = 1, diceCount
       rolls[i] = love.math.random(1, 6)
       log.debug(string.format("Rolled a %i on attack", rolls[i]))
 
@@ -157,7 +169,12 @@ class Player
   rollDefenseDice: =>
     rolls = {}
 
-    for i = 1, @defenseDice
+    diceCount = @defenseDice
+
+    if @defenseBuffed
+      diceCount += 4
+
+    for i = 1, diceCount
       rolls[i] = love.math.random(1, 6)
       log.debug(string.format("Rolled a %i on defense", rolls[i]))
 

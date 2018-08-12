@@ -179,15 +179,39 @@ class CombatCardResolution
         action: () ->
           @diceRollers["player"] = require("diceRoller")(@player\rollAttackDice!, true, true, @player.successMin)
           @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.defenseDice), false, false, 4)
+          @player.attackBuffed = false
+          @player.defenseBuffed = false
           @menuItems = {}
       })
+
+      if @player.attackPotions > 0 and not @player.attackBuffed
+        table.insert(@menuItems, {
+          name: "Quaff an attack potion",
+          action: () ->
+            @player.attackPotions -= 1
+            @player.attackBuffed = true
+            @menuItems = {}
+            @makeMenus!
+        })
     else
       table.insert(@menuItems, {
         name: "Roll your defense dice!",
         action: () ->
           @diceRollers["player"] = require("diceRoller")(@player\rollDefenseDice!, true, false, @player.successMin)
           @diceRollers["enemy"] = require("diceRoller")(rollDice(@card.actualCard.stats.attackDice), false, true, 4)
+          @player.attackBuffed = false
+          @player.defenseBuffed = false
           @menuItems = {}
       })
+
+      if @player.defensePotions > 0 and not @player.defenseBuffed
+        table.insert(@menuItems, {
+          name: "Quaff a defense potion",
+          action: () ->
+            @player.defensePotions -= 1
+            @player.defenseBuffed = true
+            @menuItems = {}
+            @makeMenus!
+        })
 
 return CombatCardResolution

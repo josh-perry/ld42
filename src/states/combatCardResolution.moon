@@ -91,6 +91,9 @@ class CombatCardResolution
     lovebite\endDraw!
 
   update: (dt) =>
+    if @player.health <= 0
+      gsm\switch("gameOver")
+
     if @enemyHealth <= 0
       @scale = math.max(@scale - 2 * dt, 0)
     else

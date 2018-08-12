@@ -9,6 +9,7 @@ class Card
     @description = cardFile.description or ""
     @diceBoosts = cardFile.diceBoosts
     @stats = cardFile.stats
+    @successMin = cardFile.successMin or 0
     @sprite = love.graphics.newImage(cardFile.sprite or "img/card_back.png")
     @effects = cardFile.effects or {
       () =>

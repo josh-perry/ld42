@@ -21,6 +21,8 @@ class Player
     @attackDice = 0
     @defenseDice = 0
 
+    @successMin = 4
+
     @equipment = {}
 
     @barSize = 128
@@ -53,6 +55,13 @@ class Player
     @agility = lume.clamp(@agility, 0, @maxAgility)
 
     @calculateDice!
+    @calculateBuffs!
+
+  calculateBuffs: =>
+    @successMin = 4
+
+    for _, v in ipairs(@equipment)
+      @successMin += v.successMin
 
   draw: =>
     x = ((@x * 24) + @x * 8) - 8 + 12

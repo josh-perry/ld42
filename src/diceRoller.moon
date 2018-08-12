@@ -5,11 +5,12 @@ lume = require("libs/lume")
 flux = require("libs/flux")
 
 class Dice
-  new: (result, sprite, quads, bottom) =>
+  new: (result, sprite, quads, bottom, minSuccess) =>
     @bottom = bottom
     @result = result
     @sprite = sprite
     @quads = quads
+    @minSuccess = minSuccess
 
     @x = love.math.random(50, lovebite.width-50)
 
@@ -38,7 +39,7 @@ class Dice
     if @settled
       result = @result
 
-      if result < 4
+      if result < @minSuccess
         @velScale = -4
     else
       result = love.math.random(1, 6)
@@ -70,14 +71,15 @@ class Dice
           @velY -= (@velY * 1.5)
 
 class DiceRoller
-  new: (results, bottom, attacking) =>
+  new: (results, bottom, attacking, minSuccess) =>
     local diceSprite
 
+    @minSuccess = minSuccess
     @attacking = attacking
     @successes = 0
 
     for _, r in ipairs(results)
-      if r >= 4
+      if r >= @minSuccess
         @successes += 1
 
     @bottom = bottom
@@ -102,7 +104,7 @@ class DiceRoller
     @dice = {}
 
     for _, r in ipairs(results)
-      table.insert(@dice, Dice(r, diceSprite, diceQuads, @bottom))
+      table.insert(@dice, Dice(r, diceSprite, diceQuads, @bottom, @minSuccess))
 
   draw: =>
     for _, d in ipairs(@dice)
@@ -139,7 +141,7 @@ class DiceRoller
 
       i = 0
       for _, d in ipairs(@dice)
-        if d.result >= 4
+        if d.result >= @minSuccess
           i += 1
           flux.to(d, 1, {x: xOffset + (i*32) + (i-1) - 16, y: y - 16})\oncomplete(() ->
             d.rotation = 0

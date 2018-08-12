@@ -1,4 +1,5 @@
 lume = require("libs/lume")
+cron = require("libs/cron")
 
 local log
 local lovebite
@@ -41,6 +42,10 @@ class CombatCardResolution
     @makeMenus!
 
     @enemyHealth = @card.actualCard.stats.health
+
+    @postDeathTimer = cron.after(2, () ->
+      @card.triggered = true
+      gsm\pop!)
 
   draw: =>
     lovebite\startDraw!
@@ -86,7 +91,10 @@ class CombatCardResolution
     lovebite\endDraw!
 
   update: (dt) =>
-    @scale = (math.sin(love.timer.getTime()*5)/3) + 3
+    if @enemyHealth <= 0
+      @scale = math.max(@scale - 2 * dt, 0)
+    else
+      @scale = (math.sin(love.timer.getTime()*5)/3) + 3
 
     allRollersDone = true
     for i, v in pairs(@diceRollers)
@@ -119,26 +127,25 @@ class CombatCardResolution
 
     controls\update!
 
-    if controls\pressed("confirm")
-      menuItem = @menuItems[@menuItemIndex]
-
-      if menuItem and menuItem.action
-        _G.uiConfirmSound\play!
-        menuItem.action!
-
-    if controls\pressed("up")
-      _G.uiSound\play!
-      @menuItemIndex -= 1
-
-    if controls\pressed("down")
-      _G.uiSound\play!
-      @menuItemIndex += 1
-
-    @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
-
     if @enemyHealth <= 0
-      @card.triggered = true
-      gsm\pop!
+      @postDeathTimer\update(dt)
+    else
+      if controls\pressed("confirm")
+        menuItem = @menuItems[@menuItemIndex]
+
+        if menuItem and menuItem.action
+          _G.uiConfirmSound\play!
+          menuItem.action!
+
+      if controls\pressed("up")
+        _G.uiSound\play!
+        @menuItemIndex -= 1
+
+      if controls\pressed("down")
+        _G.uiSound\play!
+        @menuItemIndex += 1
+
+      @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
 
   drawBigCard: =>
     love.graphics.setColor(1, 1, 1)

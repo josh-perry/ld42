@@ -28,8 +28,11 @@ class Player
     @barSize = 64
 
     -- Position
-    @x = 3
-    @y = 3
+    @gridX = 3
+    @gridY = 3
+
+    @x = ((@gridX * 24) + @gridX * 8) - 8
+    @y = ((@gridY * 32) + @gridY * 8) - 8 - 12
 
     @sprite = love.graphics.newImage("img/player.png")
 
@@ -66,13 +69,7 @@ class Player
       @successMin += v.successMin
 
   draw: =>
-    x = ((@x * 24) + @x * 8) - 8
-    y = ((@y * 32) + @y * 8) - 8 - 12
-
-    -- lg.setColor(0.4, 0.25, 0.5)
-    -- lg.circle("fill", x, y, 12)
-
-    lg.draw(@sprite, x, y)
+    lg.draw(@sprite, @x, @y)
 
     @drawEquipment!
 

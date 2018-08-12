@@ -1,5 +1,6 @@
 lume = require("libs/lume")
 cron = require("libs/cron")
+flux = require("libs/flux")
 
 local lovebite
 local log
@@ -24,8 +25,8 @@ class Game
 
     @playerTurn = true
     @bossTimer = cron.after(2, () ->
-      @map.cards[@player.x][@player.y] = require("boardCard")(@map.bossCard)
-      gsm\push("combatCardResolution", @map.cards[@player.x][@player.y], @map, @player))
+      @map.cards[@player.gridX][@player.gridY] = require("boardCard")(@map.bossCard)
+      gsm\push("combatCardResolution", @map.cards[@player.gridX][@player.gridY], @map, @player))
 
   draw: =>
     lovebite\startDraw!
@@ -55,7 +56,7 @@ class Game
     }
 
     for _, o in ipairs(directions)
-      boardCard = @map.cards[@player.x - o.x] and @map.cards[@player.x - o.x][@player.y + o.y]
+      boardCard = @map.cards[@player.gridX - o.x] and @map.cards[@player.gridX - o.x][@player.gridY + o.y]
 
       if boardCard and not boardCard.triggered
         moves += 1
@@ -63,6 +64,7 @@ class Game
     return moves
 
   update: (dt) =>
+    flux.update(dt)
     controls\update(dt)
 
     if @getMoveCount! <= 0
@@ -75,55 +77,61 @@ class Game
 
     if @playerTurn
       moved = false
-      oldX, oldY = @player.x, @player.y
+      oldX, oldY = @player.gridX, @player.gridY
 
       if controls\pressed("left")
-        @player.x -= 1
+        @player.gridX -= 1
         moved = true
       elseif controls\pressed("right")
-        @player.x += 1
+        @player.gridX += 1
         moved = true
       elseif controls\pressed("up")
-        @player.y -= 1
+        @player.gridY -= 1
         moved = true
       elseif controls\pressed("down")
-        @player.y += 1
+        @player.gridY += 1
         moved = true
 
       if moved
-        boardCard = @map.cards[@player.x] and @map.cards[@player.x][@player.y]
+        boardCard = @map.cards[@player.gridX] and @map.cards[@player.gridX][@player.gridY]
 
         if not boardCard
-          log.debug(string.format("No card at player position %i, %i, moving back", @player.x, @player.y))
+          log.debug(string.format("No card at player position %i, %i, moving back", @player.gridX, @player.gridY))
 
-          @player.x = oldX
-          @player.y = oldY
+          @player.gridX = oldX
+          @player.gridY = oldY
         elseif boardCard.triggered
-          log.debug(string.format("Trying to move onto an already triggered card at %i, %i, moving back", @player.x, @player.y))
+          log.debug(string.format("Trying to move onto an already triggered card at %i, %i, moving back", @player.gridX, @player.gridY))
 
-          @player.x = oldX
-          @player.y = oldY
+          @player.gridX = oldX
+          @player.gridY = oldY
         else
-          card = @map.cards[@player.x][@player.y]
+          pX = ((@player.gridX * 24) + @player.gridX * 8) - 8
+          pY = ((@player.gridY * 32) + @player.gridY * 8) - 8 - 12
 
-          while true
-            s = lume.randomchoice(_G.cardSounds)
+          flux.to(@player, .8, {x: pX, y: pY})\ease("elasticout")\oncomplete(() -> @triggerCard!)
 
-            if not s\isPlaying!
-              s\play!
-              break
+  triggerCard: =>
+    card = @map.cards[@player.gridX][@player.gridY]
 
-          if card.actualCard.type == "effect"
-            log.info("Stepped on an effect card")
-            gsm\push("cardResolution", card, @map, @player)
-          elseif card.actualCard.type == "equipment"
-            log.info("Stepped on an equipment card")
-            gsm\push("equipmentCardResolution", card, @map, @player)
-          elseif card.actualCard.type == "combat"
-            log.info("Stepped on an combat card")
-            gsm\push("combatCardResolution", card, @map, @player)
-          else
-            log.error(string.format("Unknown card type '%s'!", card.actualCard.type))
+    while true
+      s = lume.randomchoice(_G.cardSounds)
+
+      if not s\isPlaying!
+        s\play!
+        break
+
+    if card.actualCard.type == "effect"
+      log.info("Stepped on an effect card")
+      gsm\push("cardResolution", card, @map, @player)
+    elseif card.actualCard.type == "equipment"
+      log.info("Stepped on an equipment card")
+      gsm\push("equipmentCardResolution", card, @map, @player)
+    elseif card.actualCard.type == "combat"
+      log.info("Stepped on an combat card")
+      gsm\push("combatCardResolution", card, @map, @player)
+    else
+      log.error(string.format("Unknown card type '%s'!", card.actualCard.type))
 
   loadCards: =>
     cards = {}

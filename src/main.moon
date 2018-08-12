@@ -101,3 +101,4 @@ love.load = ->
   _G.uiDenySound = love.audio.newSource("sounds/Blip_Select44.wav", "static")
   _G.bossKillSound = love.audio.newSource("sounds/boss kill.wav", "static")
   _G.hitSound = love.audio.newSource("sounds/Hit_Hurt48.wav", "static")
+  _G.moveSound = love.audio.newSource("sounds/Jump39.wav", "static")

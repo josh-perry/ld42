@@ -118,6 +118,8 @@ class Game
           @player.gridX = oldX
           @player.gridY = oldY
         else
+          love.audio.play(_G.moveSound)
+
           pX = ((@player.gridX * 24) + @player.gridX * 8) - 8
           pY = ((@player.gridY * 32) + @player.gridY * 8) - 8 - 12
 

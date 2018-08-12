@@ -30,6 +30,7 @@ class CombatCardResolution
 
   enter: (previous, ...) =>
     @card, @map, @player = ...
+    @deathSoundPlayed = false
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
 
     @playerTurn = true
@@ -114,6 +115,7 @@ class CombatCardResolution
 
         if diff > 0
           @enemyHealth -= diff
+          love.audio.play(_G.hitSound)
       else
         diff = @diceRollers["enemy"].successes - @diceRollers["player"].successes
 
@@ -121,6 +123,7 @@ class CombatCardResolution
 
         if diff > 0
           @player.health -= diff
+          love.audio.play(_G.hitSound)
 
       @playerTurn = not @playerTurn
       @makeMenus!
@@ -132,6 +135,10 @@ class CombatCardResolution
 
     if @enemyHealth <= 0
       @postDeathTimer\update(dt)
+
+      if not @deathSoundPlayed
+        _G.bossKillSound\play!
+        @deathSoundPlayed = true
     else
       if controls\pressed("confirm")
         menuItem = @menuItems[@menuItemIndex]

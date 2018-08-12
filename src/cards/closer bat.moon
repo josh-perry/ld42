@@ -3,6 +3,7 @@ return {
   type: "combat",
   description: "Off in the middle distance",
   sprite: "img/closer bat.png",
+  floor: 1,
   stats: {
     health: 2
     power: 1

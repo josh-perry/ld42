@@ -3,6 +3,7 @@ return {
   type: "effect",
   sprite: "img/scrying ball.png",
   description: "A clear glass sphere.",
+  floor: 1,
   effects: {
     {
       name: "Look inside",

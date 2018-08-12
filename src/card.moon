@@ -5,6 +5,7 @@ class Card
     cardFile = require(cardFile)
 
     @name = cardFile.name or "Mystery Card"
+    @floor = cardFile.floor
     @type = cardFile.type or "effect"
     @description = cardFile.description or ""
     @diceBoosts = cardFile.diceBoosts

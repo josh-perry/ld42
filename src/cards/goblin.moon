@@ -3,6 +3,7 @@ return {
   type: "combat",
   description: "An ugly, weak creature.",
   sprite: "img/goblin.png",
+  floor: 1,
   stats: {
     health: 3
     power: 2

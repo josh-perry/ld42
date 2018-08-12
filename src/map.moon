@@ -7,7 +7,14 @@ class Map
     @level = level or 1
 
     -- The cards to make the board from
-    @cardList = cardList
+    @cardList = {}
+
+    for _, v in ipairs(cardList)
+      if v.unique or (v.floor and v.floor ~= level)
+        log.debug(v.name.." shouldn't be on this floor")
+        continue
+
+      table.insert(@cardList, v)
 
     @mapX, @mapY = 5, 5
 
@@ -15,11 +22,7 @@ class Map
       @cards[x] = {}
 
       for y = 1, @mapY
-        c = lume.randomchoice(cardList)
-
-        while c.unique
-          c = lume.randomchoice(cardList)
-
+        c = lume.randomchoice(@cardList)
         @cards[x][y] = require("boardCard")(c)
 
     @cards[1][1] = nil

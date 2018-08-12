@@ -3,6 +3,7 @@ return {
   type: "effect",
   sprite: "img/mountain.png",
   description: "A harsh place.",
+  floor: 1,
   effects: {
     {
       name: "Train",

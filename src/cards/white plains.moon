@@ -3,6 +3,7 @@ return {
   type: "effect",
   sprite: "img/white plains.png",
   description: "A soothing field of peace and serenity.",
+  floor: 1,
   effects: {
     {
       name: "Walk",

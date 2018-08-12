@@ -1,8 +1,9 @@
 return {
   name: "Lightning Fist",
-  type: "effect"
-  description: "You're embued with lightning!"
-  sprite: "img/lightning fist.png"
+  type: "effect",
+  description: "You're embued with lightning!",
+  sprite: "img/lightning fist.png",
+  floor: 1,
   effects: {
     {
       name: "Channel it into Agility",

@@ -3,6 +3,7 @@ return {
   type: "combat",
   description: "You can barely see it!",
   sprite: "img/bat.png",
+  floor: 1,
   stats: {
     health: 1
     power: 1

@@ -17,16 +17,25 @@ class Game
     controls = _G.controls
 
     @cards = @loadCards!
-
-  enter: =>
-    @map = require("map")(@cards, 1)
     @player = require("player")!
     @background = love.graphics.newImage("img/background.png")
 
+  enter: =>
+    @reloadMap!
+
+  reloadMap: =>
+    @map = require("map")(@cards, 1)
+    @player\resetPosition!
+
     @playerTurn = true
     @bossTimer = cron.after(2, () ->
-      @map.cards[@player.gridX][@player.gridY] = require("boardCard")(@map.bossCard)
-      gsm\push("combatCardResolution", @map.cards[@player.gridX][@player.gridY], @map, @player))
+      if @map.cards[@player.gridX][@player.gridY].actualCard.type == "boss"
+        print("boss already killed")
+        @reloadMap!
+      else
+        @map.cards[@player.gridX][@player.gridY] = require("boardCard")(@map.bossCard)
+        gsm\push("combatCardResolution", @map.cards[@player.gridX][@player.gridY], @map, @player)
+        @bossTimer\reset!)
 
   draw: =>
     lovebite\startDraw!
@@ -109,7 +118,11 @@ class Game
           pX = ((@player.gridX * 24) + @player.gridX * 8) - 8
           pY = ((@player.gridY * 32) + @player.gridY * 8) - 8 - 12
 
-          flux.to(@player, .8, {x: pX, y: pY})\ease("elasticout")\oncomplete(() -> @triggerCard!)
+          @playerTurn = false
+
+          flux.to(@player, .8, {x: pX, y: pY})\ease("elasticout")\oncomplete(() ->
+            @triggerCard!
+            @playerTurn = true)
 
   triggerCard: =>
     card = @map.cards[@player.gridX][@player.gridY]
@@ -127,7 +140,7 @@ class Game
     elseif card.actualCard.type == "equipment"
       log.info("Stepped on an equipment card")
       gsm\push("equipmentCardResolution", card, @map, @player)
-    elseif card.actualCard.type == "combat"
+    elseif card.actualCard.type == "combat" or card.actualCard.type == "boss"
       log.info("Stepped on an combat card")
       gsm\push("combatCardResolution", card, @map, @player)
     else

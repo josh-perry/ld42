@@ -27,12 +27,7 @@ class Player
 
     @barSize = 64
 
-    -- Position
-    @gridX = 3
-    @gridY = 3
-
-    @x = ((@gridX * 24) + @gridX * 8) - 8
-    @y = ((@gridY * 32) + @gridY * 8) - 8 - 12
+    @resetPosition!
 
     @sprite = love.graphics.newImage("img/player.png")
 
@@ -53,6 +48,14 @@ class Player
     @calculateDice!
 
     log.info("Player initialized")
+
+  resetPosition: =>
+    -- Position
+    @gridX = 3
+    @gridY = 3
+
+    @x = ((@gridX * 24) + @gridX * 8) - 8
+    @y = ((@gridY * 32) + @gridY * 8) - 8 - 12
 
   update: (dt) =>
     @health = lume.clamp(@health, 0, @maxHealth)

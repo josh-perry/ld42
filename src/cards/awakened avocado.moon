@@ -1,7 +1,7 @@
 return {
   name: "Awakened Avocado",
   unique: true,
-  type: "combat",
+  type: "boss",
   description: "How could this have happened?",
   sprite: "img/awakened avocado.png",
   stats: {

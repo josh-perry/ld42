@@ -44,9 +44,20 @@ class CombatCardResolution
 
     @enemyHealth = @card.actualCard.stats.health
 
+    @reportTimer = cron.after(2, () ->
+      @report = ""
+      @playerTurn = not @playerTurn
+      @makeMenus!
+
+      @diceRollers["player"] = nil
+      @diceRollers["enemy"] = nil
+      @reportTimer\reset!)
+
     @postDeathTimer = cron.after(2, () ->
       @card.triggered = true
       gsm\pop!)
+
+    @report = ""
 
   draw: =>
     lovebite\startDraw!
@@ -90,6 +101,14 @@ class CombatCardResolution
         lg.printf("Defending", 10, lovebite.height - 10, lovebite.height - 20, "left", -1.5708)
         lg.printf("Attacking", 10, lovebite.height - 10, lovebite.height - 20, "right", -1.5708)
 
+
+    if @report ~= ""
+      love.graphics.setColor(0, 0, 0, 1)
+      love.graphics.rectangle("fill", 0, lovebite.height/2 - 6, lovebite.width, 48)
+
+      love.graphics.setColor(1, 1, 1)
+      love.graphics.printf(@report, 0, lovebite.height/2, lovebite.width, "center")
+
     lovebite\endDraw!
 
   update: (dt) =>
@@ -108,9 +127,15 @@ class CombatCardResolution
       if not v.done
         allRollersDone = false
 
-    if allRollersDone and @diceRollers["player"] and @diceRollers["enemy"]
+    a, d, t = 0, 0, 0
+
+    if allRollersDone and @diceRollers["player"] and @diceRollers["enemy"] and @report == ""
       if @playerTurn
         diff = @diceRollers["player"].successes - @diceRollers["enemy"].successes
+
+        a = @diceRollers["player"].successes
+        d = @diceRollers["enemy"].successes
+        t = diff
 
         log.info("Enemy taking "..diff.." damage")
 
@@ -120,17 +145,20 @@ class CombatCardResolution
       else
         diff = @diceRollers["enemy"].successes - @diceRollers["player"].successes
 
+        a = @diceRollers["enemy"].successes
+        d = @diceRollers["player"].successes
+        t = diff
+
         log.info("Player taking "..diff.." damage")
 
         if diff > 0
           @player.health -= diff
           love.audio.play(_G.hitSound)
 
-      @playerTurn = not @playerTurn
-      @makeMenus!
+      @report = string.format("%i atk - %i def\n%i damage", a, d, math.max(t, 0))
 
-      @diceRollers["player"] = nil
-      @diceRollers["enemy"] = nil
+    if allRollersDone and @diceRollers["player"] and @diceRollers["enemy"]
+      @reportTimer\update(dt)
 
     controls\update!
 

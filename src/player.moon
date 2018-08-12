@@ -12,8 +12,8 @@ class Player
 
     -- Stats
     @health = 5
-    @power = 10
-    @agility = 6
+    @power = 4
+    @agility = 4
     @maxHealth = 10
     @maxPower = 10
     @maxAgility = 10
@@ -115,7 +115,7 @@ class Player
     @calculateDefenseDice!
 
   calculateAttackDice: =>
-    dice = lume.clamp(math.floor(@power/2), 1, 6)
+    dice = math.floor(@power/2)
 
     log.trace(string.format("%i attack dice from base stats", dice))
 
@@ -131,7 +131,7 @@ class Player
     @attackDice = dice
 
   calculateDefenseDice: =>
-    dice = lume.clamp(math.floor(@agility/2), 1, 6)
+    dice = math.floor(@agility/2)
 
     log.trace(string.format("%i defense dice from base stats", dice))
 

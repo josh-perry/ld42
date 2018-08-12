@@ -33,7 +33,6 @@ class Game
     @playerTurn = true
     @bossTimer = cron.after(2, () ->
       if @map.cards[@player.gridX][@player.gridY].actualCard.type == "boss"
-        print("boss already killed")
         @reloadMap!
       else
         @map.cards[@player.gridX][@player.gridY] = require("boardCard")(@map.bossCard)
@@ -52,8 +51,6 @@ class Game
     @player\drawResources!
 
     @player\draw!
-
-    love.graphics.print(@getMoveCount!, 10, 10)
 
     lovebite\endDraw!
 

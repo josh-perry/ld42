@@ -9,12 +9,14 @@
 * [Simple Tiled Implementation](https://github.com/karai17/Simple-Tiled-Implementation)
 * [hump](https://github.com/vrld/hump)
 * [lume](https://github.com/rxi/lume)
+* [flux](https://github.com/rxi/flux)
 * [baton](https://github.com/tesselode/baton)
 
 ## Tools
 * [Aseprite](https://www.aseprite.org/)
 * [Sublime Text 3](https://www.sublimetext.com/)
 * [Tiled](https://www.mapeditor.org/)
+* [bfxr](https://www.bfxr.net/)
 
 ## Assets
 ### Fonts

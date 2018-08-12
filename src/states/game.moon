@@ -68,8 +68,8 @@ class Game
 
           @player.x = oldX
           @player.y = oldY
-        elseif not boardCard.faceDown
-          log.debug(string.format("Trying to move onto a face up card at %i, %i, moving back", @player.x, @player.y))
+        elseif boardCard.triggered
+          log.debug(string.format("Trying to move onto an already triggered card at %i, %i, moving back", @player.x, @player.y))
 
           @player.x = oldX
           @player.y = oldY

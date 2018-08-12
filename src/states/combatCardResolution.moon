@@ -131,7 +131,7 @@ class CombatCardResolution
     @menuItemIndex = lume.clamp(@menuItemIndex, 1, #@menuItems)
 
     if @enemyHealth <= 0
-      @card.faceDown = false
+      @card.triggered = true
       gsm\pop!
 
   drawBigCard: =>

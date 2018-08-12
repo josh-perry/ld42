@@ -62,7 +62,7 @@ class CardResolution
       @menuItemIndex += 1
 
     if controls\pressed("confirm")
-      @card.faceDown = false
+      @card.triggered = true
       @card.actualCard.effects[@menuItemIndex].action(@player)
       gsm\pop!
       @player\update(dt)

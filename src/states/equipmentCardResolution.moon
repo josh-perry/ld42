@@ -26,7 +26,7 @@ class EquipmentCardResolution
       table.insert(@menuItems, {
         name: "Take it",
         action: () ->
-          @card.faceDown = false
+          @card.triggered = true
           table.insert(@player.equipment, @card.actualCard)
           gsm\pop!
       })
@@ -35,7 +35,7 @@ class EquipmentCardResolution
       table.insert(@menuItems, {
         name: string.format("Replace %s", item.name),
         action: () ->
-          @card.faceDown = false
+          @card.triggered = true
           @player.equipment[i] = @card.actualCard
           gsm\pop!
       })
@@ -43,7 +43,7 @@ class EquipmentCardResolution
     table.insert(@menuItems, {
       name: "Leave it",
       action: () ->
-        @card.faceDown = false
+        @card.triggered = true
         gsm\pop!
     })
 

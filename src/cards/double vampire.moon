@@ -1,7 +1,7 @@
 return {
   name: "Double Vampire",
   type: "combat",
-  description: "Don't feed the vampire(s).",
+  description: "Twice bitten twice shy.",
   sprite: "img/double vampire.png",
   floor: 2,
   stats: {

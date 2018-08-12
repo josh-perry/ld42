@@ -103,3 +103,4 @@ love.load = ->
   _G.hitSound = love.audio.newSource("sounds/Hit_Hurt48.wav", "static")
   _G.moveSound = love.audio.newSource("sounds/Jump39.wav", "static")
   _G.moveSound\setVolume(0.2)
+  _G.drinkSound = love.audio.newSource("sounds/Powerup34.wav", "static")

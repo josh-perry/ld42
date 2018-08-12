@@ -188,6 +188,7 @@ class CombatCardResolution
         table.insert(@menuItems, {
           name: "Quaff an attack potion",
           action: () ->
+            love.audio.play(_G.drinkSound)
             @player.attackPotions -= 1
             @player.attackBuffed = true
             @menuItems = {}
@@ -208,6 +209,7 @@ class CombatCardResolution
         table.insert(@menuItems, {
           name: "Quaff a defense potion",
           action: () ->
+            love.audio.play(_G.drinkSound)
             @player.defensePotions -= 1
             @player.defenseBuffed = true
             @menuItems = {}

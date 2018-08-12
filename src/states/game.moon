@@ -20,11 +20,14 @@ class Game
     @player = require("player")!
     @background = love.graphics.newImage("img/background.png")
 
+    @level = 0
+
   enter: =>
     @reloadMap!
 
   reloadMap: =>
-    @map = require("map")(@cards, 1)
+    @level += 1
+    @map = require("map")(@cards, @level)
     @player\resetPosition!
 
     @playerTurn = true

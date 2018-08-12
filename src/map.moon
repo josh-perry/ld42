@@ -31,6 +31,8 @@ class Map
     @bossCard = nil
 
     if @level == 1
+      @bossCard = require("card")("cards/abomination")
+    elseif @level == 2
       @bossCard = require("card")("cards/awakened avocado")
 
   draw: =>

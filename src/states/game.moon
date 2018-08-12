@@ -1,3 +1,5 @@
+lume = require("libs/lume")
+
 local lovebite
 local log
 local gsm
@@ -14,6 +16,7 @@ class Game
 
     @cards = @loadCards!
 
+  enter: =>
     @map = require("map")(@cards)
     @player = require("player")!
     @background = love.graphics.newImage("img/background.png")
@@ -34,6 +37,8 @@ class Game
     @player\draw!
 
     lovebite\endDraw!
+
+    return moves
 
   update: (dt) =>
     controls\update(dt)
@@ -75,6 +80,13 @@ class Game
           @player.y = oldY
         else
           card = @map.cards[@player.x][@player.y]
+
+          while true
+            s = lume.randomchoice(_G.cardSounds)
+
+            if not s\isPlaying!
+              s\play!
+              break
 
           if card.actualCard.type == "effect"
             log.info("Stepped on an effect card")

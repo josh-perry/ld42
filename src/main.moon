@@ -46,3 +46,16 @@ love.load = ->
   _G.log = log
   _G.gamestateManager = require("gamestateManager")!
   _G.gamestateManager\switch("mainMenu")
+
+  _G.cardSounds = {
+    love.audio.newSource("sounds/card_1.wav", "static"),
+    love.audio.newSource("sounds/card_2.wav", "static"),
+    love.audio.newSource("sounds/card_3.wav", "static"),
+    love.audio.newSource("sounds/card_4.wav", "static"),
+    love.audio.newSource("sounds/card_5.wav", "static"),
+    love.audio.newSource("sounds/card_6.wav", "static"),
+    love.audio.newSource("sounds/card_7.wav", "static"),
+    love.audio.newSource("sounds/card_8.wav", "static"),
+    love.audio.newSource("sounds/card_9.wav", "static"),
+    love.audio.newSource("sounds/card_10.wav", "static")
+  }

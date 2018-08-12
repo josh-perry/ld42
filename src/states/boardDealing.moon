@@ -1,3 +1,4 @@
+lume = require("libs/lume")
 cron = require("libs/cron")
 flux = require("libs/flux")
 
@@ -21,6 +22,17 @@ class BoardDealing
     @background = love.graphics.newImage("img/background.png")
     @cardBack = love.graphics.newImage("img/card_back.png")
 
+    @sounds = _G.cardSounds
+
+  playSound: =>
+    while true
+      s = lume.randomchoice(@sounds)
+
+      if not s\isPlaying!
+        s\play!
+        break
+
+  enter: =>
     @mapX = 5
     @mapY = 5
 
@@ -49,7 +61,9 @@ class BoardDealing
         toX = ((x * 24) + x * 8) - 8
         toY = ((y * 32) + y * 8) - 8
 
-        @group\to(card, 1, {x: toX, y: toY})\delay(i/8)\oncomplete(() -> @doneCards += 1)
+        @group\to(card, 1, {x: toX, y: toY})\delay(i/8)\oncomplete(() ->
+          @doneCards += 1
+          @playSound!)
 
     @totalCards = i
 

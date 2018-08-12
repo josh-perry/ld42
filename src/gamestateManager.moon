@@ -10,7 +10,8 @@ class GamestateManager
       game: require("states.game")!,
       cardResolution: require("states.cardResolution")!,
       equipmentCardResolution: require("states.equipmentCardResolution")!,
-      combatCardResolution: require("states.combatCardResolution")!
+      combatCardResolution: require("states.combatCardResolution")!,
+      boardDealing: require("states.boardDealing")!
 	  }
 
     log.info("Registering gamestate callbacks")

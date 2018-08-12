@@ -17,7 +17,7 @@ class MainMenu
     @menuItems = {
       {
         display: "New Game",
-        action: () -> gsm\switch("game")
+        action: () -> gsm\switch("boardDealing")
       },
       {
         display: "Continue"

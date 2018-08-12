@@ -7,7 +7,7 @@ return {
     {
       name: "Traverse",
       action: (player) ->
-        player.health -= 2
+        player.health -= 1
     }
   }
 }

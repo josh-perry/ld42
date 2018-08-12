@@ -25,7 +25,7 @@ class Player
 
     @equipment = {}
 
-    @barSize = 128
+    @barSize = 64
 
     -- Position
     @x = 3
@@ -79,7 +79,7 @@ class Player
       love.graphics.draw(v.sprite, lovebite.width - 32 - ((i-1) * 12) + i, 128)
 
   drawResources: =>
-    x, y = lovebite.width - 128, 0
+    x, y = lovebite.width - @barSize, 0
 
     lg.setColor(1, 1, 1)
 

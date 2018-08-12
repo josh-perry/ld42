@@ -31,6 +31,8 @@ class Player
     @x = 3
     @y = 3
 
+    @sprite = love.graphics.newImage("img/player.png")
+
     @heartSprite = love.graphics.newImage("img/heart.png")
 
     @diceSprite = love.graphics.newImage("img/dice.png")
@@ -64,11 +66,13 @@ class Player
       @successMin += v.successMin
 
   draw: =>
-    x = ((@x * 24) + @x * 8) - 8 + 12
-    y = ((@y * 32) + @y * 8) - 8 + 16
+    x = ((@x * 24) + @x * 8) - 8
+    y = ((@y * 32) + @y * 8) - 8 - 12
 
-    lg.setColor(0.4, 0.25, 0.5)
-    lg.circle("fill", x, y, 12)
+    -- lg.setColor(0.4, 0.25, 0.5)
+    -- lg.circle("fill", x, y, 12)
+
+    lg.draw(@sprite, x, y)
 
     @drawEquipment!
 

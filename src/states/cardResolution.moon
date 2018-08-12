@@ -63,7 +63,7 @@ class CardResolution
 
     if controls\pressed("confirm")
       @card.triggered = true
-      @card.actualCard.effects[@menuItemIndex].action(@player)
+      @card.actualCard.effects[@menuItemIndex].action(@player, @map)
       gsm\pop!
       @player\update(dt)
 

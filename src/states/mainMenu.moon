@@ -23,9 +23,6 @@ class MainMenu
         action: () -> gsm\switch("boardDealing")
       },
       {
-        display: "Continue"
-      },
-      {
         display: "Toggle Fullscreen",
         action: () ->
           fullscreen = not fullscreen

@@ -25,6 +25,8 @@ class CombatCardResolution
     @background = love.graphics.newImage("img/background.png")
     @heartSprite = love.graphics.newImage("img/heart.png")
 
+    @scale = 3
+
   enter: (previous, ...) =>
     @card, @map, @player = ...
     log.info(string.format("Resolving card '%s'", @card.actualCard.name))
@@ -84,6 +86,8 @@ class CombatCardResolution
     lovebite\endDraw!
 
   update: (dt) =>
+    @scale = (math.sin(love.timer.getTime()*5)/3) + 3
+
     allRollersDone = true
     for i, v in pairs(@diceRollers)
       v\update(dt)
@@ -140,8 +144,7 @@ class CombatCardResolution
     love.graphics.setColor(1, 1, 1)
     x, y = lovebite.width/2, lovebite.height/2
     w, h = @card.actualCard.sprite\getWidth!, @card.actualCard.sprite\getHeight!
-    s = 3, 3
-    love.graphics.draw(@card.actualCard.sprite, x, y, 0, s, s, w/2, h/2)
+    love.graphics.draw(@card.actualCard.sprite, x, y, 0, @scale, @scale, w/2, h/2)
 
     love.graphics.printf(@card.actualCard.name, 0, lovebite.height/6 - 4, lovebite.width, "center")
 

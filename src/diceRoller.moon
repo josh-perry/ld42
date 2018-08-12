@@ -106,6 +106,13 @@ class DiceRoller
     for _, r in ipairs(results)
       table.insert(@dice, Dice(r, diceSprite, diceQuads, @bottom, @minSuccess))
 
+      while true
+        s = lume.randomchoice(_G.diceSounds)
+
+        if not s\isPlaying!
+          s\play!
+          break
+
   draw: =>
     for _, d in ipairs(@dice)
       d\draw!

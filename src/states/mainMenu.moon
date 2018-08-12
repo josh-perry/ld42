@@ -13,18 +13,17 @@ class MainMenu
     gsm = _G.gamestateManager
     controls = _G.controls
 
-    @instructions = "You can't go back on cards you've already revealed. Eventually you'll have nowhere to go and fight a boss.
-
-Dice rolls of 4 and above are successes. Successful defense rolls offset successful attack rolls and damage dealt is the difference."
-
     fullscreen = false
 
     @font = lg.newFont("fonts/Pixel-UniCode.fnt")
+    @background = love.graphics.newImage("img/background.png")
+
+    @title = love.graphics.newImage("img/title.png")
 
     @menuItems = {
       {
         display: "New Game",
-        action: () -> gsm\switch("boardDealing")
+        action: () -> gsm\switch("instructions")
       },
       {
         display: "Toggle Fullscreen",
@@ -63,6 +62,11 @@ Dice rolls of 4 and above are successes. Successful defense rolls offset success
   draw: =>
     lovebite\startDraw!
 
+    w, h = @background\getWidth!, @background\getHeight!
+    for x = 0, lovebite.width / w
+      for y = 0, lovebite.width / h
+        love.graphics.draw(@background, x*w, y*h)
+
     lg.setFont(@font)
 
     for c, i in ipairs(@menuItems)
@@ -77,7 +81,7 @@ Dice rolls of 4 and above are successes. Successful defense rolls offset success
       lg.printf(i.display, 0, y, lovebite.width - 20, "right")
 
     lg.setColor(1, 1, 1)
-    lg.printf(@instructions, 10, 10, lovebite.width / 2, "left")
+    lg.draw(@title, 20, 20)
 
     lovebite\endDraw!
 

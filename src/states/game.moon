@@ -92,6 +92,10 @@ class Game
     cards = {}
     cardFiles = love.filesystem.getDirectoryItems("cards")
 
+    effects = 0
+    combat = 0
+    equipment = 0
+
     for k, file in ipairs(cardFiles)
       if string.sub(file, -3) ~= "lua"
         log.trace("Rejecting card file"..file)
@@ -100,7 +104,20 @@ class Game
       f = string.format("cards/%s", file)\sub(1, -5)
       log.info(string.format("Loading card %s", f))
 
-      table.insert(cards, require("card")(f))
+      c = require("card")(f)
+      table.insert(cards, c)
+
+      if c.type == "effect"
+        effects += 1
+      elseif c.type == "combat"
+        combat += 1
+      elseif c.type == "equipment"
+        equipment += 1
+
+    log.debug(string.format("Loaded %i effect cards", effects))
+    log.debug(string.format("Loaded %i combat cards", combat))
+    log.debug(string.format("Loaded %i equipment cards", equipment))
+    log.debug(string.format("Loaded %i total cards", effects+combat+equipment))
 
     return cards
 

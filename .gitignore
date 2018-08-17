@@ -8,3 +8,5 @@ src/img/*.png
 src/img/*.json
 
 shipping/
+
+*.sublime-workspace

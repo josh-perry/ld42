@@ -1,5 +1,10 @@
 function BuildLua {
     moonc .
+
+    if ($? -eq $False) {
+        Write-Host "Build failed!"
+        exit
+    }
 }
 
 function BuildAseprite {

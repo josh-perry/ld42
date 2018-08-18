@@ -21,3 +21,5 @@ Copy-Item -Recurse -Exclude @('*.moon', '*.tmx', '*.aseprite') "$source/*" $clea
 
 Compress-Archive "$cleanSource/*" "$shipping/bin.zip"
 Rename-Item "$shipping/bin.zip" "game.love"
+
+Invoke-Item "$shipping"

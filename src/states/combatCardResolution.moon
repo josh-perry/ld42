@@ -44,7 +44,7 @@ class CombatCardResolution
 
     @enemyHealth = @card.actualCard.stats.health
 
-    @reportTimer = cron.after(2, () ->
+    @reportTimer = cron.after(1, () ->
       @report = ""
       @playerTurn = not @playerTurn
       @makeMenus!
@@ -53,7 +53,7 @@ class CombatCardResolution
       @diceRollers["enemy"] = nil
       @reportTimer\reset!)
 
-    @postDeathTimer = cron.after(2, () ->
+    @postDeathTimer = cron.after(1, () ->
       @card.triggered = true
       gsm\pop!)
 

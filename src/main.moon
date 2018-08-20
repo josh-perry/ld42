@@ -1,9 +1,11 @@
 -- Just for console logging niceness
+io.stdout\setvbuf("no")
 print("")
 
 -- Libs
 log = require("libs.log")
 log.level = "debug"
+log.usecolor = false
 
 lovebite = require("libs.lovebite")
 baton = require("libs.baton")
